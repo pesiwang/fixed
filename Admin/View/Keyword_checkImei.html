@@ -1,0 +1,114 @@
+ <include file="Public/head" />
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.config.js"></script>
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.all.min.js"></script>
+<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="page-header">
+									<h1>
+										查保修
+										<small>
+											<i class="icon-double-angle-right"></i>
+											查保修-自动回复消息，说明：1、用户发送序列号给公众号，推送图文消息。2、用户点击图文消息，跳转查询结果页面
+										</small>
+									</h1>
+								</div><!-- /.page-header -->
+								<form class="form-horizontal" role="form" method="post"  action="{:U('Admin/Keyword/checkimei')}">
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">标题:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[tittle]" class="col-xs-5 col-sm-5" value="{$rule['tittle']}">
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >描述:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[discription]" class="col-xs-5 col-sm-5" value="{$rule['discription']}">
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">推送图片:</label>
+										<div class="input-group col-sm-4">
+											<input type="text" name="data[picurl]" class="col-xs-2 col-sm-2 form-control" value="{$rule['picurl']}">
+											<span class="input-group-btn">
+  												<button id="girl" class="btn btn-success btn-sm" type="button" onclick="upImage(1)">
+                												  上传
+                 								 </button>
+                 						    </span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >限制次数:</label>
+										<div class="col-sm-9">
+											<input type="number"  name="data[limiter]" class="col-xs-5 col-sm-5" value="{$rule['limiter']}"><span style="color:red">用户最开始拥有的查询次数</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >赞助金额:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[money]" class="col-xs-5 col-sm-5" value="{$rule['money']}"><span style="color:red">用户每次赞助支付的金额</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >赞助后增加天数（随机最高值）:</label>
+										<div class="col-sm-9">
+											<input type="number"  name="data[addlimiter]" class="col-xs-5 col-sm-5" value="{$rule['addlimiter']}"><span style="color:red">最低10次，如：填90，即随机10-90;95%概率出现在10-20</span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												保存
+											</button>
+										</div>
+									</div>
+								</form>
+								</div><!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div></div>
+					<script type="text/plain" id="j_ueditorupload" style="height:5px;display:none;" ></script>
+    <script>
+    //上传图片
+      //实例化编辑器
+      window.up_select=1;
+      var o_ueditorupload = UE.getEditor('j_ueditorupload',
+      {
+        autoHeightEnabled:false
+      });
+      o_ueditorupload.ready(function ()
+      {
+     
+		    o_ueditorupload.hide();//隐藏编辑器
+		     
+		    //监听图片上传
+		    o_ueditorupload.addListener('beforeInsertImage', function (t,arg)
+		    {
+		    	if(window.up_select==1){
+		    		$('[name="data[picurl]"]').val(arg[0].src);
+		    	}
+		    	if(window.up_select==2){
+		    		$('[name="data[prize_picurl]"]').val(arg[0].src);
+		    	}
+		    	
+		          //alert('这是图片地址：'+arg[0].src);
+		    });
+      });
+    function upImage(up_select)
+    {
+    	window.up_select=up_select;
+      var myImage = o_ueditorupload.getDialog("insertimage");
+      myImage.open();
+    }
+    //上传图片-end
+    </script>
+ <include file="Public/foot" />

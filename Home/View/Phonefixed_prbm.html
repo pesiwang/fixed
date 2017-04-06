@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	    <title>修好乐手机维修</title>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/weui.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/example.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/style.css" />
+	    <script src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+	    <script src="__PUBLICHOME__/js/phonefiexd_prbm.js"></script>
+	    <style type="text/css">
+	    	li {
+				display: list-item;
+			}
+	    </style>
+	     <script>window.color_id = "{$color_id}";</script>
+	</head>
+	<body>
+		<div class="header">
+			<a href="javascript:history.go(-1)">
+				<img src="__PUBLICHOME__/img/left.png" style="">
+			</a>
+			<span>手机的故障是?</span>
+		</div>
+		<div class="detail">
+			<p id="model-name">快速报修</p>
+			<p id="prbm-list">屏幕进灰,有拖影或残影</p>
+		</div>
+		<div class="container">
+			<ul id="accordion" class="accordion">
+				<li>
+					<div class="link"><i class="fa-chevron-down"><img src="__PUBLICHOME__/img/plus.png" width="6%" class="plus"/><img src="__PUBLICHOME__/img/minus.png" width="6%" class="minus"/></i>屏幕问题</div>
+					<ul class="submenu">
+						<li><a href="###">屏幕进灰<span class="right"></span></a></li>
+						<li><a href="###">有拖影或残影<span class="right"></span></a></li>
+						<li><a href="###">白屏/黑屏<span class="right"></span></a></li>
+						<li><a href="###">漏光/坏点/花屏<span class="right"></span></a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<form action="/Home/Phonefixed/before" method="post">
+			<input type="text" name="model_color"  style="display:none"/>
+			<input type="text" name="prbm_list"  style="display:none"/>
+ 		
+		<div>&nbsp;<br>&nbsp;</div>
+		<div class="footer ser">
+			<a href="javascript:;" id="submit" onclick="$('form').submit();" class="weui_btn weui_btn_default weui_btn_disabled">确认，下一步</a>
+		</div>
+		</form>
+			 <include file="Public/toast" />
+	</body>
+</html>

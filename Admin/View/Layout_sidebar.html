@@ -1,0 +1,59 @@
+<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+					
+					
+					<ul class="nav nav-list">
+					<li>
+							<a href="{:U('Admin/Index/index')}">
+								<i class="icon-home"></i>
+								<span class="menu-text">主页 </span>
+							</a>
+					</li>
+					<volist name="list" id='vo'>
+						<li  class="{$vo.class}">
+							<a href="{$vo.url}" class="dropdown-toggle">
+								<i class="{$vo.icon}"></i>
+								<span class="menu-text"> {$vo.name} </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+							<volist name='vo.children' id='vo2'>
+								<li class="{$vo2.class}">
+									<a href="{$vo2.url}">
+										<i class="{$vo2.icon}"></i>
+										{$vo2.name}
+									</a>
+								</li>
+								</volist>
+							</ul>
+						</li>
+						</volist>
+					</ul><!-- /.nav-list -->
+					
+					
+					
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+				<div class="main-content">
+<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">{$controller}</a>
+							</li>
+							<li class="active">{$action}</li>
+						</ul><!-- .breadcrumb -->
+				

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	    <meta name="format-detection" content="telephone=no" />
+	    <title>订单情况</title>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/weui.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/example.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/style.css" />
+	    <script src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+		<style type="text/css">
+			.weui_icon_msg:before{
+				font-size: 30px;
+			}
+			.weui_article {
+				color: #3e3737;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div style="padding:5px 20px;">
+			<div>
+				<p style="font-size: 25px;color: #09BB07;font-weight:600;margin-left: 5px;" id="stus">订单成功 ！</p>
+				<p style="padding: 5px 0;color: #3e3737;">维修费用：<span id="total_fee">240</span></p>
+			</div>
+		</div>
+		<div class="container" id="container">
+			<div class="order-content">
+				<div class="weui_cells_con">
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">联系人：</span>
+						<span class="weui_cells_reason" id="user_name">曾彬</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">手机号码：</span>
+						<span class="weui_cells_reason" id="phone">13888888888</span>
+					</p>
+					<p class="weui_cells_total" style="width:90%;padding-left:10px;">
+						<span class="weui_cells_title" style="margin-left:-10px;">所在地区：</span>
+						<span class="weui_cells_reason" id="address">内屏碎(图像不正常)</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">问题列表：</span>
+						<span class="weui_cells_reason" id="prbm_list">内屏碎(图像不正常)</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">订单时间：</span>
+						<span class="weui_cells_reason" id="add_time">邮寄维修</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">订单号：</span>
+						<span class="weui_cells_reason" id="order_id">邮寄维修</span>
+					</p>
+				</div>	
+				<hr>
+            	<div class="weui_cells_con" id="post" style="display:none;border-bottom: 1px solid #eee;">
+					<p class="weui_cells_total" style="width:90%;padding-left:10px;">
+						<span class="weui_cells_title" style="margin-left:-10px;">维修地址：</span>
+						<span class="weui_cells_reason" style="color:#225fba;" >广东省珠海市香洲区南屏蓝溪枫景修好乐维修中心</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">联系人：</span>
+						<span class="weui_cells_reason" style="color:#225fba;" >乐乐</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">电话：</span>
+						<span class="weui_cells_reason" style="color:#225fba;" >0756-8679169</span>
+					</p>
+				</div>	
+				
+				
+				<div style="padding: 10px 10px 30px">
+					<div class="weui_cell_chaxun"style="padding: 10px 0;border: 1px solid #04BE02;border-radius:5px;margin-bottom: 20px;display: none;">
+						<input class="weui_input" type="text" name='package_company' placeholder="快递公司名称">
+						<span style="color:red">----------------------------</span>
+						<input class="weui_input" type="text" name="package_no" placeholder="快递单号">
+					</div>
+					<a href="javascript:;" class="weui_btn weui_btn_primary waitpay" style="display: none;">前往支付</a>
+					<a href="javascript:;" class="weui_btn weui_btn_primary sucess_payy" style="display: none;">提交</a>
+					<a href="javascript:;" class="weui_btn weui_btn_plain_primary jisong_sucess" style="display: none;">查询快递详情</a>
+					<a href="javascript:;" class="weui_btn weui_btn_plain_primary chuli_sucess" style="display: none;">查询快递详情</a>
+				</div>
+            </div>
+			<div style="background-color: #F4F4F4;">&nbsp;</div>
+            <div class="order-content">
+            	<div class="bd">
+    				<article class="weui_article">
+				        <section>
+				            <h2 class="title">注意事项：</h2>
+				            <section>
+				                <p>1、如有重要资料，请自行将手机提前备份，维修过程可能导致资料丢失，修好乐对丢失的资料概不负责。</p>
+				                <p>2、手机是贵重物品，为了确保邮寄过程中安全，请尽量选择顺丰速递。（拒收平邮，到付件，回寄运费将由修好乐官方承担） </p>
+				                <p>3、请直接邮寄裸机，不需要邮寄配件，盒子、购买发票，SIM卡及一切手机附属品。</p>
+				            </section>
+				        </section>
+				    </article>
+				</div>
+            </div>
+		</div>
+ 		<include file="Public/toast" />
+ 		<script>
+ 			$(function() {
+				// 请求数据
+				$.ajax({
+					url : '/Home/Phonefixed/order_detail_by_id/',
+					type : 'post',
+					data : 'order_id=' + window.order_id,
+					beforeSend : function() {
+						show_loading();
+					},
+					success : function(msg) {
+						hide_loading();
+						if (msg.code == 0) {
+							init(msg.data);
+							if (msg.data.stus == 1){
+								wait_pay(msg.data);
+							} else if (msg.data.stus == 2) {
+								sucess_pay();
+							} else if (msg.data.stus == 3) {
+								yijisong(msg.data);
+							} else if (msg.data.stus == 4){
+								check();
+							} else if (msg.data.stus == 5){
+								chuli_sucess(msg.data);
+							} else if (msg.data.stus == 999){ 
+								jiaoyi_off();
+							}
+						} else {
+							show_alert(msg.msg);
+						}
+						
+					},
+					statusCode : {
+						404 : function() {
+							hide_loading();
+							show_alert("服务器不可用");
+						}
+					}
+				});
+			
+			});
+			function init(data){
+				$('#total_fee').html(data.total_fee+'元');
+				$('#user_name').html(data.user_name);
+				$('#phone').html(data.phone);
+				$('#address').html(data.address);
+				$('#prbm_listd').html(data.prbm_list);
+				$('#add_time').html(data.add_time);
+				$('#order_id').html(data.order_id);
+			}
+			function wait_pay(data){
+				$('#stus').html('待支付  ！');
+				$('.waitpay').attr('href', '{:U('Phonefixed/waitpay')}/order_id/' + data.order_id);
+				$('.waitpay').show();
+			}
+			function sucess_pay() {
+				$('#stus').html('已支付  ！');
+				$('.sucess_payy').bind('click',function () {
+					set_package_no();
+				});
+				$('#post').show();
+				$('#post_address').show();
+				$('#post_name').show();
+				$('#post_phone').show();
+				$('.sucess_payy').show();
+				$('.weui_cell_chaxun').show();
+			}
+			function yijisong(data) { 
+				$('#stus').html('已寄送  ！');
+				$('.jisong_sucess').attr('href', 'http://m.kuaidi100.com/result.jsp?nu=' + data.package_no_user);
+				$('.jisong_sucess').show();
+			}
+			function check() { 
+				$('#stus').html('维修处理中  ！');
+			}
+			function chuli_sucess(data) { 
+				$('#stus').html('处理完成  ！');
+				$('.chuli_sucess').attr('href', 'http://m.kuaidi100.com/result.jsp?nu=' + data.package_no_mg);
+				$('.chuli_sucess').show();
+			}
+			function jiaoyi_off() { 
+				$('#stus').html('交易关闭 ！');
+			}
+			
+			function set_package_no()
+			{
+				var order_id = window.order_id;
+				var package_no = $("[name=package_no]").val();
+				var package_company = $("[name=package_company]").val();
+				$.ajax({
+					url : '/Home/Phonefixed/set_package_no',
+					type : 'post',
+					data : {
+					   "order_id" : order_id,
+					   "package_no" : package_no,
+					   "package_company" : package_company
+					},
+					beforeSend : function() {
+						show_loading('提交中...');
+					},
+					success : function(msg) {
+						hide_loading();
+						if (msg.code == 0) {
+							alert('提交成功！');
+							window.location.reload();
+						} else {
+							alert(msg.msg);
+						}
+					},
+					statusCode : {
+						404 : function() {
+							hide_loading();
+							show_alert("服务器不可用");
+						}
+					}
+				});
+			}
+ 		</script>
+ 		
+	</body>
+</html>

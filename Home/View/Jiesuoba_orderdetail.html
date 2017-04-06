@@ -1,0 +1,70 @@
+<!--//订单查询-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>订单详情</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <style>
+    	.zicolor{
+    		color: #a3a3a3;
+    		font-size:initial ;
+    	}
+    </style>
+  <body>
+
+        
+	         <div class="weui_panel">
+	            <div class="weui_panel_hd"><span style="font-size: larger;color: #09BB07;">订单详情</span></div>
+	            <div class="weui_panel_hd">订单状态:
+	            
+	            <small style="float: right;color: #09BB07;">
+		            			<if condition = "$data[0]['state'] eq 1">
+		            					处理成功
+		            				<elseif condition = "$data[0]['state'] eq 2"/>
+		            						<span style="color:red">处理失败</span>
+	            						<else/>
+						            	<if condition = "$data[0]['isrefund'] eq 1">
+	            								退款中
+				            			<elseif condition = "$data[0]['isrefund'] eq 2" />
+					            			<span style="color:red">退款失败</span>
+					            		<elseif condition = "$data[0]['isrefund'] eq 3" />	
+					            			<span style="color:red">退款成功</span>
+		            					<else />
+		            					  处理中
+		            				</if>
+		            		</if>	            	
+	            	
+	            	
+	            	
+	            </small>
+	            </div>
+	            <div class="weui_panel_bd">
+	                <div class="weui_media_box weui_media_text ">
+                                <p class="zicolor">IMEI:{$data[0]['imei']}</p>
+                                <p class="zicolor">手机号:{$data[0]['phone']}</p>
+                                <p class="zicolor">微信号:{$data[0]['wechat']}</p>
+                                <p class="zicolor">套餐:{$data[0]['costname']}</p>
+                                <p class="zicolor">实付金额:￥{$data[0]['realpay']}</p>
+	                    <ul class="weui_media_info">
+	                        <li class="weui_media_info_meta">交易时间：{$data[0]['add_time']}</li>
+	                        <li class="weui_media_info_meta weui_media_info_meta_extra">微信支付{$keyituikuan}</li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div> 
+	        
+	        <if condition = "$keyituikuan eq 1">
+	        <div class="weui_opr_area">
+	            <p class="weui_btn_area">
+	                <a href="{:U('Home/Jiesuoba/totk' ,array('id' => $data[0]['id']))}"   class="weui_btn weui_btn_primary">申请退款</a>
+	            </p>
+	        </div>  
+			</if>
+
+
+  </body>
+</html>

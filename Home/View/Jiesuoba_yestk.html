@@ -1,0 +1,106 @@
+<!--//退款申请-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>退款信息</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <style>
+    	.zicolor{
+    		color: #a3a3a3;
+    		font-size: 0.8em;
+    	}
+    	#sendcode{
+    		background-color: ;
+    	}
+    </style>
+  <body>
+
+        
+		   <form method="post" id="sure" action="{:U('Home/Jiesuoba/tkinfo',array('id'=>$datas['id']))}">
+	         <div class="weui_panel">
+	            <div class="weui_panel_hd"><span style="font-size: larger;color: #09BB07;">退款信息填写</span></div>
+		   		<div class="weui_cells weui_cells_form">
+		            <div class="weui_cell">
+		                <div class="weui_cell_hd"><label class="weui_label">IMEI{$datas['id']}</label></div>
+		                <div class="weui_cell_bd weui_cell_primary">
+		                    <input class="weui_input"   value="{$datas['imei']}" disabled="disabled"/>
+		                </div>
+		            </div>
+		            
+		            
+		            <div class="weui_cell">
+		                <div class="weui_cell_hd"><label class="weui_label">支付宝</label></div>
+		                <div class="weui_cell_bd weui_cell_primary">
+		                    <input class="weui_input" type="text" name ="data[zhifubao]" placeholder="请认真填写收取退款的支付宝账号" id="zhi"/>
+		                </div>
+
+		            </div>	
+		            
+		            <div class="weui_cell">
+		                <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+		                <div class="weui_cell_bd weui_cell_primary">
+		                    <input class="weui_input" type="text" name ="data[tkname]"  placeholder="请认真填写支付宝对应的姓名" id="name"/>
+		                </div>
+
+		            </div>
+		            
+		            <div class="weui_cell">
+		                <div class="weui_cell_hd"><label class="weui_label">金额</label></div>
+		                <div class="weui_cell_bd weui_cell_primary">
+		                    <input class="weui_input" type="number"  value="{$datas['price']}" disabled="disabled"/>
+		                </div>
+		            </div>		            
+		            
+		        </div>
+		        <div class="weui_cells_tips">请认真填写信息，保证信息正确，我们将以支付宝转账的方式进行退款！</div>
+		        <div class="weui_btn_area">
+		            <a class="weui_btn weui_btn_primary" href="javascript:" id="showTooltips" onclick="sure()">确定</a>
+		        </div>				
+
+
+	        </div> 	
+			</form>
+  
+
+  </body> 
+<script type="text/javascript">
+	function sure(){
+		var zhifubao = $("#zhi").val().trim();
+		var name = $("#name").val().trim();
+		if(zhifubao != "" || name != ""){
+			
+//			$("#sure").submit();
+        	var url = "{:U('Home/Jiesuoba/tkinfo')}";
+        	$.ajax({
+        		type:"get",
+        		url:url,
+        		dataType:'json',
+				data:'zhifubao='+zhifubao+'&tkname='+name+'&id={$datas["id"]}',	             
+        		success:function(data){
+        			if(data){
+						alert("你的退款信息已填完，我们将尽快给予退款!");
+        				
+                        window.location.href="http://jiesuoba.com/index.php/Home/Jiesuoba/successurls";
+        			}
+        		},
+        		error:function(e){
+        			
+        			
+        		}
+        		
+        	});			
+			
+		}else{
+			
+			alert("请检查支付宝或者姓名有没有填写完整!");
+		}
+		
+		
+		
+	}
+</script>
+</html>

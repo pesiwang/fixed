@@ -1,0 +1,160 @@
+<?php
+namespace Admin\Widget;
+use Think\Controller;
+class LayoutWidget extends Controller 
+{
+    public function header()
+    {
+        $this->display("Layout:header");
+    }
+    
+    
+    public function sidebar()
+    {
+        
+        $menu=array
+        (
+             "Keyword"=>array
+             (
+                "cname"=>"Keyword",
+                "name"=>"查一查",
+                "icon"=>"icon-share-alt",
+                "children"=>array
+                (
+                    "checkImei"=>array
+                    (
+                        "aname"=>"checkImei",
+                        "name"=>"查保修设置",
+                        "icon"=>"icon-envelope-alt",
+                        "url"=>U("Admin/Keyword/checkImei"),
+                    ),
+                   "answer"=>array
+                   (
+                       "aname"=>"answer",
+                        "name"=>"查教程回复设置",
+                        "icon"=>"icon-fire",
+                        "url"=>U("Admin/Keyword/answer"),
+                   ),
+                    "index"=>array
+                    (
+                        "aname"=>"index",
+                        "name"=>"关键词管理",
+                        "icon"=>"icon-envelope-alt",
+                        "url"=>U("Admin/Keyword/index"),
+                    ),
+                ),  
+             ),
+            "Order"=>array
+            (
+                "cname"=>"Order",
+                "name"=>"IMEI服务",
+                "icon"=>"icon-shopping-cart",
+                "children"=>array
+                (
+                    "detail"=>array
+                    (
+                        "aname"=>"detail",
+                        "name"=>"订单列表",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Order/detail"),
+                    ),
+                    "index"=>array
+                    (
+                        "aname"=>"index",
+                        "name"=>"套餐设置",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Order/index"),
+                    ),
+                    "explain"=>array
+                    (
+                        "aname"=>"explain",
+                        "name"=>"业务说明编辑",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Order/explain"),
+                    ),                    
+                    
+                ),
+            ),
+            "Sms"=>array
+            (
+                "cname"=>"Sms",
+                "name"=>"短信记录",
+                "icon"=>"icon-envelope",
+                "children"=>array
+                (
+                    "index"=>array
+                    (
+                        "aname"=>"index",
+                        "name"=>"短信发送记录",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Sms/details"),
+                    ),
+                ),
+            ),
+            "Pay"=>array
+            (
+                "cname"=>"Pay",
+                "name"=>"付款记录",
+                "icon"=>"icon-check",
+                "children"=>array
+                (
+                    "index"=>array
+                    (
+                        "aname"=>"index",
+                        "name"=>"付款列表",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Pay/index"),
+                    ),
+                ),
+            ),
+	    "Orderfixed"=>array
+            (
+                "cname"=>"Orderfixed",
+                "name"=>"手机维修",
+                "icon"=>"icon-check",
+                "children"=>array
+                (
+                    "index"=>array
+                    (
+                        "aname"=>"orderlist",
+                        "name"=>"订单列表",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Orderfixed/orderlist"),
+                    ),
+                    "item"=>array
+                    (
+                        "aname"=>"item",
+                        "name"=>"商品设置",
+                        "icon"=>"icon-heart",
+                        "url"=>U("Admin/Orderfixed/item"),
+                    ),
+                ),
+            ),
+        );
+        //获取当当前的控制器名称和方法名称
+        $controller=CONTROLLER_NAME;
+        $action=ACTION_NAME;
+        foreach($menu as &$v){
+           if($controller==$v['cname']){
+               $v['class']='active open';
+           }
+           foreach ($v['children'] as &$v2){
+               if($action==$v2['aname']&&$controller==$v['cname']){
+                   $v2['class']='active';
+               }
+           }
+        }
+        $this->assign("list",$menu);
+        $this->assign("controller",$controller); 
+        $this->assign("action",$action); 
+        $this->display("Layout:sidebar");
+    }
+    public function setting()
+    {
+        $this->display("Layout:setting");
+    }
+    public function navigation(){
+        $this->display("Layout:navigation");
+    }
+    
+}

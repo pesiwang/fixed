@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>支付测试</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+         <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <body>
+    <div class="weui_msg">
+        <div class="hd">
+        <h1 class="page_title">
+        </h1>
+    	</div>
+        <div class="weui_text_area">
+            <h2 class="weui_msg_title">微信支付测试zjt</h2>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="number" id="money"  placeholder="输入支付金额">
+            </div>
+        </div>
+        <div class="weui_opr_area">
+            <p class="weui_btn_area">
+                <button href="javascript:;" onclick="submit()" class="weui_btn weui_btn_primary">支付</button>
+            </p>
+        </div>
+    </div>
+    <!-- 弹窗提示 end -->
+    <!-- 弹出外观，规格选择  end-->
+<!-- 弹窗提示 -->
+<div class="weui_dialog"  id="alert" style="z-index:20;display:none">
+            <div class="weui_dialog_hd"><strong class="weui_dialog_title">提示</strong></div>
+            <div class="weui_dialog_bd" id="alert-bd">请检查外观与规格是否为空</div>
+            <div class="weui_dialog_ft">
+                <a href="javascript:;" onclick="$(this).parent().parent().hide()" class="weui_btn_dialog primary">确定</a>
+            </div>
+</div>
+<!-- 弹窗提示 end -->
+<!-- 信息弹窗 -->
+<div id="toast" style="display: none;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast" style="z-index:100;">
+            <i class="weui_icon_toast"></i>
+            <p id="op" class="weui_toast_content">已完成</p>
+        </div>
+</div>
+<!-- 信息弹窗end -->
+<!-- 加载弹窗 -->
+<div id="loadingToast" class="weui_loading_toast" style="z-index:100;display: none;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast" style="z-index:100;">
+            <div class="weui_loading">
+                <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+                <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+            </div>
+            <p class="weui_toast_content">数据加载中</p>
+        </div>
+</div>
+<!-- 加载弹窗 end-->
+     <script type="text/javascript">
+        window.paing=1;
+     	window.paymsg='';
+        //调用微信JS api 支付
+        function jsApiCall()
+        {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                window.paymsg,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    //alert(res.err_code+res.err_desc+res.err_msg);
+                    if(res.err_msg == "get_brand_wcpay_request:ok"){
+                        //alert(res.err_code+res.err_desc+res.err_msg);
+                            window.location.href="http://we.xhaole.com/index.php/Home/Checkfixed/paysuccess";
+                        }else{
+                            //返回跳转到订单详情页面
+                            //alert(支付失败);
+                            window.location.href="http://we.xhaole.com/index.php/Home/Checkfixed/payerror";
+                        }
+                }
+            );
+        }
+
+        function callpay()
+        {
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                }
+            }else{
+                jsApiCall();
+            }
+        }
+    </script>
+    <script>
+    function submit(){
+    	var money=$('#money').val();
+    	if(window.paing==1){
+    		window.paing=2;
+    		statOp();
+        	$.ajax({
+        		url:"http://we.xhaole.com/index.php/Home/Checkfixed/ajax_payjsdk/money/"+money+"/openid/{$openid}",
+        		type:"GET",
+        		success:function(msg){
+        			if(msg.code==1){
+        				myalert('输入金额不对，重新扫码');
+        			}else{
+        				window.paymsg=msg.jsdk.result;
+            			window.paymsg=eval('('+ window.paymsg +')');
+            			//alert(window.paymsg);
+            			window.paing=1;$("#loadingToast").hide();
+            			callpay();
+        			}
+        		}
+        	})
+    	}else{
+    		window.paing=2;
+    	}
+
+    }
+    
+    </script>
+    <script>
+  //通用方法-开始操作
+    function statOp(){
+    	$('#loadingToast').show();
+    }
+    //通用方法-结束操作
+    function endOp(msg){
+    	$("#loadingToast").hide();
+    	$('#op').html(msg);
+    	$('#toast').show();
+    	setTimeout("$('#toast').hide()",800);
+    }
+    function myalert(msg){
+    	$('#loadingToast').hide();
+    	$("#alert-bd").html(msg);
+    	$('#alert').show();
+    }
+    </script>
+    </body>
+</html>

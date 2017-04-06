@@ -1,0 +1,35 @@
+<!--解锁吧说明页面（关 于业务的说明）-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>业务说明</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+    </head>
+     <style>
+    	#jiesuo{
+    		position: fixed;
+    		bottom: 0px;
+    		width: 100%;
+    	}
+    </style>   
+    <body>
+    <div class="weui_panel" >
+        <div class="weui_panel_hd"><span style="font-size: larger;color: #09BB07;">IMEI服务说明 </span></div>
+        <div class="weui_panel_bd" style="height:1000px">
+            <div class="weui_media_box weui_media_text">
+                <p class="weui_media_desc">{$tpl}</p>
+            </div>
+        </div>
+    </div>
+
+	<div class="weui_cells" id="jiesuo">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+    			<a href="{:U('Home/Jiesuoba/unlock')}" class="weui_btn weui_btn_primary">我需要</a>	
+	        </div>
+	    </div>
+	</div>  
+    </body>
+</html>

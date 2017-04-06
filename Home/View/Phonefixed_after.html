@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	    <title>修好乐手机维修</title>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/weui.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/example.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/style.css" />
+	        <script src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+	    <script src="__PUBLICHOME__/js/phonefiexd_after.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<a href="javascript:history.go(-1)">
+				<img src="__PUBLICHOME__/img/left.png" style="">
+			</a>
+			<span>故障维修方案</span>
+		</div>
+		<div class="detail">
+			<p id="model" >ipone6S (灰(黑色屏幕))</p>
+		</div>
+		<div class="container" id="container">
+			<!--填写基本信息 -->
+			<form action="{:U('order')}"   method="post">
+			  <input type="text" style="display:none" name="model" />
+			 <input type="text" style="display:none" name="prbmlist" />
+			 <input type="text" style="display:none" name="comments" />
+			<div class="weui_cells weui_cells_form" style="border-top: 0.0625em solid #DFDFDF;font-size: 14px;">
+        		<div class="weui_cell">
+	            	<div class="weui_cell_bd weui_cell_primary">
+	                	<input class="weui_input" type="text" name="user_name"  placeholder="请输入姓名">
+	            	</div>
+	        	</div>
+	        	<div class="weui_cell">
+	            	<div class="weui_cell_bd weui_cell_primary">
+	                	<input class="weui_input" type="number"  name="phone"  pattern="[0-9]*" placeholder="请输入手机号码">
+	            	</div>
+	        	</div>
+	        <div class="weui_cell weui_cells_form weui_select_after">
+            <div class="weui_cell_hd">
+                <label for="" class="weui_label">省市县地区 :</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+			                 <select  name="address[0]"  class="weui_select"  id="address0"  style="width: 17%; color:blue;">
+						                    <option value="0">请选择</option>
+			                </select>
+			                >
+			                <select  name="address[1]"   class="weui_select"  id="address1"  style="width: 17%;color:blue;">
+			             			       <option value="0">请选择</option>
+			                </select>
+			               >
+			                <select   name="address[2]"  class="weui_select"   id="address2" style="width: 40%;color:blue;">
+			                			    <option value="0">请选择</option>
+			                </select>
+			            </div>
+        </div>
+	        	<div class="weui_cell">
+	            	<div class="weui_cell_bd weui_cell_primary">
+	                	<input class="weui_input" type="text"  name="address[3]"   id="address3" placeholder="请输入详细地址">
+	            	</div>
+	        	</div>
+    		</div>
+    		<div class="weui_cells weui_cells_checkbox" style="display: -webkit-box;border-top: 0.0625em solid #DFDFDF;">
+		             <label class="weui_cell weui_check_label" for="s12">
+		            <div class="weui_cell_hd">
+		                <input type="radio"  class="weui_check"  name="way"  value="post"  id="s12" checked="checked">
+		                <i class="weui_icon_checked"></i>
+		            </div>
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <p>邮寄维修</p>
+		            </div>
+		        </label>
+		        <label class="weui_cell weui_check_label" for="s11">
+		            <div class="weui_cell_hd">
+		                <input type="radio" class="weui_check"  name="way"  id="s11"  value="indoor" >
+		                <i class="weui_icon_checked"></i>
+		            </div>
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <p>工程师上门维修</p>
+		            </div>
+		        </label>
+	    	</div>
+	    	<div class="weui_cell"   id="indoor-time"   style="display:none">
+		            <div class="weui_cell_hd"><label for="" class="weui_label">上门时间 : </label></div>
+			            <div class="weui_cell_bd weui_cell_primary">
+			                <input class="weui_input"   name="indoor_time"  type="datetime-local" value="" placeholder="">
+			            </div>
+		    </div>
+		   <div class="weui_cell" style="border-bottom: 0.0625em solid #DFDFDF;font-size: 14px;">
+			            	<div class="weui_cell_bd weui_cell_primary">
+			                	<input class="weui_input"  name="discount_number"  type="text" placeholder="请输入优惠码(非必填)">
+	            	</div>
+        	</div>
+        	</form>
+        	<div style="padding: 1.25em 0.625em;text-align: center;background-color: #F4F4F4;">
+	    		<p  id="indoor-tips" style="font-size: 14px;color: #796767;padding-bottom: 1.25em;display:none;">上门维修不收上门服务费</p>
+	    		<a href="javascript:;"  onclick="formSubmit();"  class="weui_btn weui_btn_primary ">确认，下一步</a>
+			</div>
+			<div class="weui_pay" style="border-top:0.0625em solid #DFDFDF;">
+	        	<p><span class="weui_M">合计：<strong id="total" >1150元</strong></span></p>
+            </div>
+			<div class="weui_cells_con" style="border-top:0.0625em solid #DFDFDF;">
+				<p class="weui_cells_total">
+					<span class="weui_cells_title">备注：</span>
+					<span id="comments" class="weui_cells_reason" id="comments">内屏碎(图像不正常)</span>
+				</p>
+			</div>
+			<div class="weui_cells_con"  id="list" style="border-top:0.0625em solid #DFDFDF;">
+				<p class="weui_cells_total">
+					<span class="weui_cells_title">故障：</span>
+					<span class="weui_cells_reason">内屏碎(图像不正常)</span>
+				</p>
+				<p class="weui_cells_total">
+					<span class="weui_cells_title">方案：</span>
+					<span class="weui_cells_reason">内屏碎(图像不正常)</span>
+				</p>
+			</div>
+		</div>
+		<div>&nbsp;<br>&nbsp;</div>
+		
+		<!-- 验证手机号-->
+		<include file="Public/toast" />
+	</body>
+</html>

@@ -1,0 +1,112 @@
+ <include file="Public/head" />
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.config.js"></script>
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.all.min.js"></script>
+<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="page-header">
+									<h1>
+										添加关键词
+										<small>
+											<i class="icon-double-angle-right"></i>
+											添加自动回复消息<span style="color:red">关键词添加后不可以删除，但是可以禁用/修改，请重复利用。</span>
+										</small>
+									</h1>
+								</div><!-- /.page-header -->
+								<form class="form-horizontal" role="form" method="post"  action="{:U('Admin/Keyword/addoredit')}">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >关键字:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[keyword]" class="col-xs-5 col-sm-5" value="{$keyword['keyword']}">
+											<input type="text"  style="display:none" name="data[id]" class="col-xs-5 col-sm-5" value="{$keyword['id']}">
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">标题:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[tittle]" class="col-xs-5 col-sm-5" value="{$keyword['tittle']}">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >描述:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[discription]" class="col-xs-5 col-sm-5" value="{$keyword['discription']}">
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">推送图片:</label>
+										<div class="input-group col-sm-4">
+											<input type="text" name="data[picurl]" class="col-xs-2 col-sm-2 form-control" value="{$keyword['picurl']}">
+											<span class="input-group-btn">
+  												<button id="girl" class="btn btn-success btn-sm" type="button" onclick="upImage(1)">
+                												  上传
+                 								 </button>
+                 						    </span>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">原文链接:</label>
+										<div class="input-group col-sm-4">
+											<input type="text" name="data[baseurl]" class="col-xs-2 col-sm-2 form-control" value="{$keyword['baseurl']}">
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												保存
+											</button>
+										</div>
+									</div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+										<img class="" src="/Public/Admin/exmp.png" alt="Jason's Photo">
+										</div>
+									</div>
+								</form>
+								</div><!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div></div>
+  <script type="text/plain" id="j_ueditorupload" style="height:5px;display:none;" ></script>
+    <script>
+    //上传图片
+      //实例化编辑器
+      window.up_select=1;
+      var o_ueditorupload = UE.getEditor('j_ueditorupload',
+      {
+        autoHeightEnabled:false
+      });
+      o_ueditorupload.ready(function ()
+      {
+     
+		    o_ueditorupload.hide();//隐藏编辑器
+		     
+		    //监听图片上传
+		    o_ueditorupload.addListener('beforeInsertImage', function (t,arg)
+		    {
+		    	if(window.up_select==1){
+		    		$('[name="data[picurl]"]').val(arg[0].src);
+		    	}
+		    	if(window.up_select==2){
+		    		$('[name="data[prize_picurl]"]').val(arg[0].src);
+		    	}
+		    	
+		          //alert('这是图片地址：'+arg[0].src);
+		    });
+      });
+    function upImage(up_select)
+    {
+    	window.up_select=up_select;
+      var myImage = o_ueditorupload.getDialog("insertimage");
+      myImage.open();
+    }
+    //上传图片-end
+    </script>
+
+ <include file="Public/foot" />

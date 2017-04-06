@@ -1,0 +1,187 @@
+ <include file="Public/head" />
+<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="page-header">
+									<h3 class="header smaller lighter black">
+									<a href="{:U('Admin/Orderfixed/item')}">所有类目</a>->
+									<a href="{:U('Admin/Orderfixed/listbrand',array("nav1_id" => I('nav1_id'),"nav1"=>I('nav1')))}">{:I('nav1')}</a>->
+									{:I('nav2')}
+									</h3>
+								</div><!-- /.page-header -->
+								<form class="form-horizontal" role="form" method="post"  action="{:U('Admin/Orderfixed/editbrand',I('get.'))}">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >品牌名称:</label>
+										<div class="col-sm-9">
+											<input type="text"  name="data[name]" class="col-xs-5 col-sm-5" value="{$item['name']}" placeholder="输入品牌的名称">
+											<input type="text"  style="display:none" name="data[id]" class="col-xs-5 col-sm-5" value="{$item['id']}">
+											<input type="text"  style="display:none" name="data[parent]" class="col-xs-5 col-sm-5" value="{:I('nav1_id')}">
+										<button class="btn-sm btn-info" type="submit">
+												修改/添加名称
+										</button>
+										</div>
+									</div>
+								</form>
+		<!-- PAGE CONTENT BEGINS -->
+	<div class="page-header">
+		<div class="col-md-offset-3 col-md-9 col-md-pull-3">
+			<button class="btn-sm btn-info" onclick="show_detail()">
+				<i class="icon-ok bigger-110"></i>
+				添加型号
+			</button>
+		</div>
+	</div><!-- /.page-header -->
+		<div class="table-responsive">
+				<table id="sample-table-2" class="table table-striped table-bordered table-hover ">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>费用名称</th>
+							<th>
+								<i class="icon-time bigger-110 hidden-480"></i>
+								操作
+							</th>
+						</tr>
+					</thead>
+
+					<tbody>
+					<volist name='list' id='v'>	
+						<tr>
+							<td>{$i}</td>
+							<td>{$v.name}</td>
+							<td>
+									<a href=" {:U("Admin/Orderfixed/editprbm",array("nav1"=>I('nav1'),"nav1_id"=>I('nav1_id'),"nav2"=>I('nav2'),"nav2_id" => I('nav2_id'),"nav3"=>$v['name'],"nav3_id"=>$v['id']))} " class="green" >可修问题</a>
+									<a href='###' id='type-edit' onclick="type_edit({$v['id']})" class="green" >颜色</a>
+									<a onclick = "del({$v.id})"  class="red" href="#">删除</a>
+							</td>
+						</tr>						
+						
+					</volist>			
+					</tbody>
+				</table>
+			</div>
+			<div id="my-modal" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h3 class="smaller lighter blue no-margin">修改颜色</h3>
+											</div>
+											<div class="modal-body">
+											<label class="col-sm-3 control-label no-padding-right" >型号:</label>
+											<input type="text"  name="data_type[id]" class="col-xs-5 col-sm-5" value="" style="display:none">
+											<input type="text"  name="data_type[name]" class="col-xs-5 col-sm-5" value="" placeholder="iphone 6s Plus">
+											<input type="text"  name="data_type[parent]" class="col-xs-5 col-sm-5" value="{:I('nav2_id')}" style="display:none" placeholder="iphone 6s Plus">
+											<br><br>
+											<div class="col-sm-8">
+												<select multiple="multiple" size="10" name="data_type[color]">
+											      <option value="灰(黑色屏幕)">灰(黑色屏幕)</option>
+											      <option value="黑色">黑色</option>
+											      <option value="白色">白色</option>
+											      <option value="金色">金色</option>
+											      <option value="银色">银色</option>
+											      <option value="灰色">灰色</option>
+											      <option value="粉色">粉色</option>
+											      <option value="黄色">黄色</option>
+											      <option value="蓝色">蓝色</option>
+											      <option value="绿色">绿色</option>
+											      <option value="银(白色屏幕)">银(白色屏幕)</option>
+											      <option value="灰(白色屏幕)">灰(白色屏幕)</option>
+											      <option value="金(白色屏幕)">金(白色屏幕)</option>
+											    </select>
+												    	<script>
+													    var demo1 = $('select[name="data_type[color]"]').bootstrapDualListbox();
+													    $("#demoform").submit(function() {
+													      alert($('[name="duallistbox_demo1[]"]').val());
+													      return false;
+													    });
+													  </script>
+												</div>
+											</div>
+											<div class="modal-footer">
+											   <button class="btn btn-sm btn-danger pull-right" id="type-submit">
+													<i class="ace-icon fa fa-times"></i>
+													提交
+												</button>
+											</div>
+										</div><!-- /.modal-content -->
+						</div></div><!-- /.modal-dialog -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div></div> 	
+	<script>
+	function show_detail(){
+		$('#my-modal').modal('show')
+	}
+	function type_edit(id){
+		$.ajax({
+			url:'{:U("Admin/Orderfixed/echochild_ajax")}',
+			data:'id='+id,
+			type:'post',
+			success:function(msg){
+				if(msg.code==0){
+					$('[name="data_type[name]"]').val(msg.name);
+					$('[name="data_type[parent]"]').val(msg.parent);
+					$('[name="data_type[id]"]').val(msg.id);
+					$('[name="data_type[color]"]').children('option').each(function(){
+						var color=$(this).val();
+						if($.inArray(color,msg.color)>-1){
+ 							$(this).attr('selected',"selected");
+						}else{
+							$(this).removeAttr('selected');
+						}
+						demo1.bootstrapDualListbox('refresh');
+					})
+					show_detail();
+				}
+			}
+		});
+	}
+	</script>
+	<script>
+	$(function(){
+		$('#type-submit').bind('click',function(){
+			var type_name=$('[name="data_type[name]"]').val();
+			var type_parent=$('[name="data_type[parent]"]').val();
+			var type_color=$('[name="data_type[color]"]').val();
+			var type_id=$('[name="data_type[id]"]').val();
+			$.ajax({
+				url:'{:U("Admin/Orderfixed/editchild_ajax")}',
+				type:'post',
+				dataType:'json',
+				data:{
+					'data':{
+					'name':type_name,
+					'parent':type_parent,
+					'color':type_color,
+					'id':type_id
+					}
+				},
+				success:function(msg){
+					alert(msg.msg);
+					if(msg.code==0)location.reload();
+				}
+			});
+		});
+	});
+	
+	function del(id)
+	{
+		$.ajax({
+			url:'{:U("Admin/Orderfixed/delchild")}',
+			type:'post',
+			dataType:'json',
+			data:{
+				'id':id
+			},
+			success:function(msg){
+				alert(msg.msg);
+				if(msg.code==0)location.reload();
+			}
+		});
+	}
+	</script>
+ <include file="Public/foot" />

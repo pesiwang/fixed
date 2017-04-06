@@ -1,0 +1,51 @@
+ <include file="Public/head" />
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.config.js"></script>
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.all.min.js"></script>
+<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="page-header">
+									<h1>
+										解锁吧说明页编辑
+									</h1>
+								</div><!-- /.page-header -->
+								<form class="form-horizontal" role="form" method="POST" action="{:U('Admin/Order/explain')}">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >说明:</label>
+										<div class="col-sm-9">
+											<script id="container" name="content" class="col-xs-5 col-sm-5" type="text/plain" placeholder="你现在在想什么？" required style="height:500px"></script>
+										    <script type="text/javascript">
+										        var ue = UE.getEditor('container',{
+										        	toolbars:[
+										                       ['fullscreen', 'undo', 'redo','italic','underline','strikethrough','subscript','superscript','fontborder',
+										                        'forecolor','preview','horizontal','removeformat','unlink','cleardoc','fontfamily','fontsize','paragraph','insertorderedlist',
+										                        'indent','justifyleft','justifycenter','justifyright','justifyjustify']
+										                      ]
+										        });
+										        ue.ready(function() {
+										            ue.setContent('{$tpl}');
+										        });
+									    </script>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												保存
+											</button>
+										</div>
+									</div>
+								</form>
+								</div>
+							</div>
+						</div>
+					</div></div> 	
+
+
+
+
+
+ <include file="Public/foot" />

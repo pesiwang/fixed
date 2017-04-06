@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>支付成功</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+    </head>
+    <body>
+    <div class="page slideIn msg">
+    <div class="weui_msg">
+        <div class="weui_icon_area"><i class="weui_icon_success weui_icon_msg"></i></div>
+        <div class="weui_text_area">
+            <h2 class="weui_msg_title">支付成功</h2>
+        </div>
+        <div class="weui_opr_area">
+            <p class="weui_btn_area">
+                <a href="javascript:;" onclick="windowclose()"  class="weui_btn weui_btn_primary">确定</a>
+            </p>
+        </div>
+        <div class="weui_extra_area">
+            <a href="">查看详情</a>
+        </div>
+    </div>
+</div>
+{$jsdk}
+<script>
+function windowclose(){
+	wx.closeWindow();
+}
+</script>
+    </body>
+</html>

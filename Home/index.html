@@ -1,0 +1,53 @@
+<!--解锁吧说明页面（关 于业务的说明）-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>结算支付</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <body>
+<div class="page">
+	<div class="weui_cells_title">订单详情<br>
+		请确认订单信息是否有误
+	</div>
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>IMEI</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['imei']}</div>
+	    </div>
+	</div>
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>手机号:</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['phone']}</div>
+	    </div>
+	</div>	
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>微信号:</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['wechat']}</div>
+	    </div>
+	</div>        
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>套餐类型:</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['costname']}</div>
+	    </div>
+	</div>
+  	<div class="weui_panel_hd">总需要支付金额:<strong style="color: #ff4500;">￥{$data['price']}</strong></div>	
+	<a href="javascript:;" class="weui_btn weui_btn_primary">确认支付</a>
+</div>
+    </body>
+</html>
+ 

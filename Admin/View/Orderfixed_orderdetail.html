@@ -1,0 +1,166 @@
+<include file="Public/head" />
+<div class="page-content">
+	<div class="page-header">
+		<h1>
+			 订单详情<small> <i class="icon-double-angle-right"></i>
+			</small>
+		</h1>
+	</div>
+	<!-- /.page-header -->
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="tabbable">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active">
+					<a data-toggle="tab" href="#home"aria-expanded="true">
+					<i class="green ace-icon fa fa-home bigger-120"></i> 订单信息
+					</a></li>
+
+					<li class="">
+					<a data-toggle="tab" href="#messages"aria-expanded="false">用户信息(微信) 
+					</a></li>
+					
+					<li class="">
+					<a data-toggle="tab" href="#feedetail"aria-expanded="false">费用详情
+					</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div id="home" class="tab-pane fade active in">
+					<p class="header smaller lighter blue" style="font-size: 21px;" >
+					订单号: {$order_detail['order_id']}</p>
+					
+					<p>用户姓名: {$order_detail['user_name']}</p>
+					<p>手机号: {$order_detail['phone']}</p>
+					<p>收获地址: <input name="address" type="text" style="width: 500px;" value="{$order_detail['address']}"></p>
+					<p>用户备注: {$order_detail['comments']}</p>
+					
+					<hr>
+					<p>型号: {$order_detail['model']}</p>
+					<p>外观: {$order_detail['color']}</p>
+					<p>问题列表: {$order_detail['prbm_list']}</p>
+					<p>优惠码: {$order_detail['discount_number']}   &nbsp;&nbsp;&nbsp;</p>
+					<p>总费用: {$order_detail['total_fee']}元</p>
+					
+					<hr>
+					
+					<p>
+					维修方式: 
+					<select name="way" style="width: 200px;">
+					<option value="post" <if condition="$order_detail['way'] eq 'post' ">selected="selected"</if> >邮寄</option>
+					<option value="indoor" <if condition="$order_detail['way'] eq 'indoor' ">selected="selected"</if> >上门</option>
+					</select>
+					</p>
+					
+					<p>上门时间: {$order_detail['indoor_time']}</p>
+					
+					<p>订单提交时间: {$order_detail['add_time']|date="Y/m/d H:i:s",###}</p>
+					
+					<p>是否已经处理:
+						<if condition="$order_detail['is_opreate'] eq 1">
+						<span class="label label-sm label-success">已处理</span>
+						<else />
+						<span class="label label-sm label-warning">未处理</span>
+						</if>
+					</p>
+					
+					<hr>
+<!-- 					订单状态 -->
+<p>
+							订单状态: <select name="stus" style="width: 200px;">
+									<option value="1" <if condition="$order_detail['stus'] eq 1">selected="selected"</if> >待支付</option>
+									<option value="2"  <if condition="$order_detail['stus'] eq 2">selected="selected"</if> >已支付</option>
+									<option value="3" <if condition="$order_detail['stus'] eq 3">selected="selected"</if> >已寄送</option>
+									<option value="4" <if condition="$order_detail['stus'] eq 4">selected="selected"</if> >维修处理中</option>
+									<option value="5" <if condition="$order_detail['stus'] eq 5">selected="selected"</if> >处理完成</option>
+									<option value="999" <if condition="$order_detail['stus'] eq 999">selected="selected"</if> >交易关闭</option>
+								</select>
+						</p>
+<!-- 					订单状态 -->
+					<p>买家公司: <input name="package_name_user" style="width:80px" type="text" value="{$order_detail['package_name_user']}"  ></p>
+					<p>买家单号: <input name="package_no_user" type="text" value="{$order_detail['package_no_user']}"  ><a target="_blank" href="http://www.kuaidi100.com/chaxun?nu={$order_detail['package_no_user']}" >查询</a></p>
+					<p>卖家公司: <input name="package_name_mg" style="width:80px" type="text" value="{$order_detail['package_name_mg']}"  ></p>
+					<p>卖家单号: <input name="package_no_mg" type="text" value="{$order_detail['package_no_mg']}"  ><a target="_blank" href="http://www.kuaidi100.com/chaxun?nu={$order_detail['package_no_mg']}">查询</a></p>
+					<p>
+						<button class="btn btn-sm btn-danger" onclick="submit();">
+							<i class="ace-icon fa fa-times"></i> 保存
+						</button>
+					</p>
+					</div>
+					
+					
+					<div id="messages" class="tab-pane fade">
+					<if condition="empty($profile)">
+						<h1 class="grey lighter smaller">
+							<span class="blue bigger-125">
+								<i class="ace-icon fa fa-sitemap"></i>
+								用户信息不存在
+							</span>
+						</h1>
+					<else />
+					
+						<p><img style="height:60px" src="{$profile['headimgurl']}"/></p>
+						<p>微信昵称 ： {$profile['nickname']}</p>
+						<p>imei查询截至日期 ：{$profile['is_add']|date="y/m/d H:i:s",###}</p>
+						<p>访问频率 ： {$profile['times']}</p>
+						<p> 关注状态 ：
+							<if condition="$profile['subscribe'] eq 1">
+							<span class="label label-sm label-success">关注</span>
+						    	<else />
+						    	<span class="label label-sm label-warning">取消关注</span>
+							</if>
+						</p>
+					
+					</if>
+					</div>
+					
+					<div id="feedetail" class="tab-pane fade">
+					<volist name="fee_detail" id="vo">
+					<p>问题：{$vo['detail_parent']}</p>
+					<p>问题细节：{$vo['detail']}</p>
+					<p>方案：{$vo['solution']}</p>
+					<p>费用：{$vo['fee']}元</p>
+					<hr>
+					</volist>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	function submit(){
+		var stus = $('[name=stus]').val();
+		var stus = $('[name=stus]').children('[value=' + stus + ']').html();
+		
+		if(window.confirm('你确定修改订单状态为'+stus)){
+			
+			var data = new Object();
+			data['id'] = "{:I('id')}";
+			data['address'] = $('[name=address]').val();
+			data['way'] = $('[name=way]').val();
+			data['stus'] = $('[name=stus]').val();
+			data['package_no_user'] = $('[name=package_no_user]').val();
+			data['package_no_mg'] = $('[name=package_no_mg]').val();
+			data['package_name_mg'] = $('[name=package_name_mg]').val();
+			data['package_name_user'] = $('[name=package_name_user]').val();
+			
+			data = JSON.stringify(data);
+			
+			$.ajax({
+				url : '{:U('updateorder')}',
+				data : eval("(" + data + ")"),
+				type : 'post',
+				success : function (msg){
+					alert(msg.msg);
+					if (msg.code == 0) {
+						window.location.reload();
+					}
+				}
+			});
+			
+		}
+	}
+	
+	</script>
+	<include file="Public/foot" />

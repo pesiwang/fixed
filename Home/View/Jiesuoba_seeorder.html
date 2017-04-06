@@ -1,0 +1,88 @@
+<!--//订单查询-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>我的订单</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+        <style>
+    	.zicolor{
+    		color: #a3a3a3;
+    		font-size:initial ;
+    	}
+    </style>
+  <body>
+	<div class="weui_panel_hd"><span style="font-size: larger;color: #09BB07;">我的订单</span></div>	
+		<volist name = "list" id="v">
+	  		<a href='{:U("Home/Jiesuoba/orderdetail" , array("id" => $v["id"]))}'>
+		         <div class="weui_panel">
+		            <div class="weui_panel_hd"><span style="color: #09BB07;">{$i}</span>.订单状态:
+		            
+		            <small style="float: right;color: #09BB07;">
+		            			<if condition = "$v.state eq 1">
+		            					处理成功
+		            				<elseif condition = "$v.state eq 2"/>
+		            						<span style="color:red">处理失败</span>		            					
+		            				<else/>
+						            	<if condition = "$v.isrefund eq 1">
+	            								退款中
+				            			<elseif condition = "$v.isrefund eq 2" />
+					            			<span style="color:red">退款失败</span>
+					            		<elseif condition = "$v.isrefund eq 3" />	
+					            			<span style="color:red">退款成功</span>
+		            					<else />
+		            					处理中
+		            				</if>
+		            		</if>			            	
+		            	
+		            </small>
+		            </div>
+		            <div class="weui_panel_bd">
+		                <div class="weui_media_box weui_media_text">
+		                    <p class="zicolor">IMEI：{$v.imei}</p>
+		                    <p class="zicolor">套餐：{$v.costname}</p>
+		                    <ul class="weui_media_info">
+		                        <li class="weui_media_info_meta">实付金额：<span style="color:#09BB07 ;">￥{$v.realpay}</span></li>
+		                        <li class="weui_media_info_meta weui_media_info_meta_extra">交易时间：{$v.add_time}</li>
+		                    </ul>
+		                </div>
+		            </div>
+		        </div> 	
+	        	<div class="weui_panel_hd"></div>	
+	  		</a>
+  		</volist>  
+  		<volist name = "fix_list" id="vo">
+	  		<a href='{:U('Phonefixed/detail/',array('order_id' => $vo['order_id']))}'>
+		         <div class="weui_panel">
+		            <div class="weui_panel_hd"><span style="color: #09BB07;"></span>
+		            	订单状态:
+		            	<small style="float: right;color: #09BB07;">
+		            	<switch name = "vo['stus']">
+				<case value="1">待支付</case>
+				<case value="2">已支付</case>
+				<case value="3">已寄送</case>
+				<case value="4">维修处理中</case>
+				<case value="5"><span style="color:green">处理完成</span></case>
+				<case value="999"><span style="color:red">已关闭</span></case>
+				</switch>
+		              	</small>
+		            </div>
+		            <div class="weui_panel_bd">
+		                <div class="weui_media_box weui_media_text">
+		                    <p class="zicolor">型号：{$vo['model']}</p>
+		                    <p class="zicolor">问题：{$vo['prbm_list']}</p>
+		                    <ul class="weui_media_info">
+		                        <li class="weui_media_info_meta">总金额：<span style="color:#09BB07 ;">{$vo['total_fee']}</span></li>
+		                        <li class="weui_media_info_meta weui_media_info_meta_extra">创建时间：{$vo['add_time']|date="Y/m/d H:i:s",###}</li>
+		                    </ul>
+		                </div>
+		            </div>
+		        </div> 	
+	        	<div class="weui_panel_hd"></div>	
+	  		</a>
+  		</volist>
+  </body>
+</html>

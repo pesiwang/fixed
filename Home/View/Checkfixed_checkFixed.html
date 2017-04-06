@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>{$userInfo['nickname']}的设备</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+    </head>
+    <body>
+  <div class="weui_panel_bd">
+                 <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                    <div class="weui_media_hd">
+                        <img class="weui_media_appmsg_thumb" src="{$userInfo['headimgurl']}" alt="">
+                    </div>
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">{$userInfo['nickname']}</h4>
+                        <p class="weui_media_desc">你还有 
+                        <span style="color:red">{$hadtimes.left}
+                        <if condition="$hadtimes.type eq times">次<else />天</if></span>免费查询次数</p>
+                    </div>
+                </a>
+                <a href="javascript:void(0);" class="weui_media_box weui_media_appmsg">
+                    <div class="weui_media_hd">
+                        <img class="weui_media_appmsg_thumb" src="{$result['img']}" alt="">
+                    </div>
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">{$result['model']}</h4>
+                        <p class="weui_media_desc">{$result['renovate']['result']}</p>
+                    </div>
+                </a>
+             <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>sn码</p>
+                </div>
+                <div class="weui_cell_ft">{$result['sn']}</div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>保修到期</p>
+                </div>
+                <div class="weui_cell_ft">{$result['warranty']}|{$result['daysleft']}</div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>电话支持到期</p>
+                </div>
+                <div class="weui_cell_ft">{$result['tele']}</div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>机身内存</p>
+                </div>
+                <div class="weui_cell_ft">{$result['capacity']}</div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>颜色</p>
+                </div>
+                <div class="weui_cell_ft">{$result['color']}</div>
+            </div>
+             <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>网络类型</p>
+                </div>
+                <div class="weui_cell_ft">{$result['network']}</div>
+            </div>
+             <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>版本号</p>
+                </div>
+                <div class="weui_cell_ft">{$result['number']}</div>
+            </div>
+             <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>生产工厂</p>
+                </div>
+                <div class="weui_cell_ft">{$result['origin']}</div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>生产时间开始</p>
+                </div>
+                <div class="weui_cell_ft">{$result['start']}</div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>生产时间结束</p>
+                </div>
+                <div class="weui_cell_ft">{$result['end']}</div>
+            </div>
+             <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>是否激活</p>
+                </div>
+                <div class="weui_cell_ft">{$result['activated']}</div>
+            </div>
+             <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>是否被锁</p>
+                </div>
+                <div class="weui_cell_ft">{$result['locked']}</div>
+            </div>
+   </div>
+    </body>
+</html>

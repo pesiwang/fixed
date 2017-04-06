@@ -1,0 +1,38 @@
+ <include file="Public/head" />
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.config.js"></script>
+<script charset="utf-8" src="__PUBLIC__/uedit/ueditor.all.min.js"></script>
+<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="page-header">
+									<h1>
+										查教程
+										<small>
+											<i class="icon-double-angle-right"></i>
+											查教程-自动回复消息 说明：用户点击查教程按钮，推送下面的文本消息
+										</small>
+									</h1>
+								</div><!-- /.page-header -->
+								<form class="form-horizontal" role="form" method="post"  action="{:U('Admin/Keyword/answer')}">
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" >回复内容编辑:</label>
+										<div class="col-sm-9">
+										<textarea class="" rows="10" cols="25" name="content">{$content}</textarea>
+										</div>
+									</div>
+									<div class="space-4"></div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="submit">
+												<i class="icon-ok bigger-110"></i>
+												保存
+											</button>
+										</div>
+									</div>
+								</form>
+								</div><!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div></div>
+ <include file="Public/foot" />

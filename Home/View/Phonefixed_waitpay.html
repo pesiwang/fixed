@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	    <meta name="format-detection" content="telephone=no" />
+	    <title>填写联系方式</title>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/weui.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/example.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/style.css" />
+	    <script src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+	    <script src="__PUBLICHOME__/js/phonefiexd_waitpay.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<a href="javascript:history.go(-1)">
+				<img src="__PUBLICHOME__/img/left.png" style="">
+			</a>
+			<span>待支付订单信息</span>
+		</div>
+		<div class="detail">
+			<p>机型 : {$order['model']} ({$order['color']}) </p>
+		</div>
+		<div class="container" id="container">
+            <div class="order-content">
+				<div class="weui_cells_con" style="border-bottom: 1px solid #eee;width:90%;padding-left:10px;">
+					<p class="weui_cells_total">
+						<span class="weui_cells_title" style="margin-left:-10px;" >故障列表：</span>
+						<span class="weui_cells_reason" style="color:#225fba;" >{$order['prbm_list']}</span>
+					</p>
+				</div>	
+			<div class="weui_cells_con" style="border-bottom: 1px solid #eee;width:90%;height:50px;padding-left:10px;">
+				<p class="weui_cells_total">
+					<span class="weui_cells_title" style="margin-left:-10px;" >维修方案：</span>
+					<span class="weui_cells_reason" style="color:#225fba;" >{$order['solution_list']}</span>
+				</p>
+			</div>
+			<div class="weui_cells_con" style="border-bottom: 1px solid #eee;">
+				<p class="weui_cells_total">
+					<span class="weui_cells_title">备注：</span>
+					<span class="weui_cells_reason">{$order['comments']}</span>
+				</p>
+			</div>
+			<div class="weui_cells_con" style="">
+	        	<p class="weui_cells_total">
+	        		<span class="weui_M">合计维修费用：<strong id="money">{$order['total_fee']}</strong>元</span>
+	        	</p>
+            </div>
+            </div>
+            <div style="background-color: #F4F4F4;">&nbsp;</div>
+            <div class="order-content">
+            	<div class="weui_cells_con">
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">联系人：</span>
+						<span class="weui_cells_reason" >{$order['user_name']}</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">手机号码：</span>
+						<span class="weui_cells_reason" >{$order['phone']}</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title" >详细地址：</span>
+						<span class="weui_cells_reason" >{$order['address']}</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">服务方式：</span>
+						<if condition="$order['way'] eq 'post' " >
+						<span class="weui_cells_reason" >邮寄维修</span>
+						<elseif condition="$order['way'] eq 'indoor' " />
+						<span class="weui_cells_reason" >上门时间 ：{$order['indoor_time']}</span>
+						</if>
+					</p>
+				</div>	
+            </div>
+        	<div class="weui_cells weui_cells_checkbox xiuhaole">
+    			<label class="weui_cell weui_check_label" for="s11">
+		            <div class="weui_cell_hd">
+		                <input type="checkbox" class="weui_check" name="checkbox1" id="s11" >
+		                <i class="weui_icon_checked"></i>
+		            </div>
+		            <div class="weui_cell_bd weui_cell_primary">
+		                <p>我已阅读并同意<span id="showDialog2">《修好乐服务协议》</span></p>
+		            </div>
+		        </label>
+			</div>
+		</div>
+		<!-- 弹窗 dialog 修好乐服务协议-->		
+		<div class="weui_dialog_alert" id="dialog2" style="display: none;">
+			<div class="weui_mask"></div>
+		    <div class="weui_dialog">
+		        <div class="weui_dialog_hd"><strong style="color:#de7c23" class="weui_dialog_title">修好乐服务协议</strong></div>
+		        <div class="weui_dialog_bd"><article class="weui_article"><section><p style="height: 350px;overflow: scroll;text-align:left;">
+尊敬的用户：<br>
+首先欢迎您选择“修好乐”！<br>
+“修好乐”在此特别提醒您（用户）在预约维修服务之前，请认真阅读本《服务协议》（以下简称“协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权使用本协议所涉服务。您的预约、查询、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。如果您未满18周岁，请在法定监护人的陪同下阅读本协议。
+<br>
+一、协议范围<br>
+1.1 协议适用主体范围<br>
+本协议是您与“修好乐”之间的协议。“修好乐”是指官网及其相关服务可能存在的运营关联单位。“用户”是指使用“修好乐”相关服务的使用人，在本协议中更多地称为“您”。<br>
+1.2 本许可协议指向内容<br>
+本协议项下的许可内容是指“修好乐”向用户提供的包括但不限于移动设备的维修服务（以下简称“服务”）。<br>
+1.3 协议关系及冲突条款<br>
+本协议可由“修好乐”随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本网站查阅最新版协议条款。在“修好乐”修改协议条款后，如果用户不接受请立即停止使用服务，继续使用，则被视为接受修改后的协议。<br>
+二、帐号与密码安全<br>
+2.1 “修好乐”特别提醒您应妥善保管您的帐号和密码。当您使用完毕后，应安全退出。因您保管不善可能导致遭受盗号或密码失窃，责任由您自行承担。<br>
+三、个人隐私信息保护<br>
+3.1 用户在使用本服务的过程中，可能需要填写或提交一些必要的信息，如法律法规、规章规范性文件（以下称“法律法规”）规定的需要填写的身份信息。如用户提交的信息不完整或不符合法律法规的规定， 则用户可能无法使用本服务或在使用本服务的过程中受到限制。<br>
+3.2 个人隐私信息是指涉及用户个人身份或个人隐私的信息，比如，用户真实姓名、手机号码、手机设备识别码、详细地址等等。非个人隐私信息是指用户对本服务的操作状态以及使用习惯等明确且客观反映在“修好乐”服务器端的基本记录信息、个人隐私信息范围外的其它普通信息，以及用户同意公开的上述隐私信息。<br>
+3.3 尊重用户个人隐私信息的私有性是“修好乐”的一贯制度，“修好乐”将采取技术措施和其他必要措施，确保用户个人隐私信息安全，防止在本服务中收集的用户个人隐私信息泄露、毁损或丢失。在发生前述情形或者“修好乐”发现存在发生前述情形的可能时，将及时采取补救措施。<br>
+3.4 “修好乐”未经用户同意不向任何第三方公开、 透露用户个人隐私信息。但以下特定情形除外：<br>
+•“修好乐”根据法律法规规定或有权机关的指示提供用户的个人隐私信息；<br>
+•由于用户将其个人隐私信息告知他人或与他人共享个人隐私信息，由此导致的任何个人信息的泄漏，或其他非因“修好乐”原因导致的个人隐私信息的泄露；<br>
+•用户自行向第三方公开其个人隐私信息；<br>
+•用户与“修好乐”及合作维修单位之间就用户个人隐私信息的使用公开达成约定，“修好乐”因此向合作维修单位公开用户个人隐私信息；<br>
+•任何由于黑客攻击、电脑病毒侵入及其他不可抗力事件导致用户个人隐私信息的泄露。<br>
+3.5 用户同意“修好乐”可在以下事项中使用用户的个人隐私信息：<br>
+•“修好乐”向用户及时发送重要通知，如个人服务信息、本协议条款的变更；<br>
+•“修好乐”内部进行审计、数据分析和研究等，以改进“修好乐”的产品、服务和与用户之间的沟通；<br>
+•依本协议约定，“修好乐”管理、审查用户信息及进行处理措施；<br>
+•适用法律法规规定的其他事项。<br>
+3.6 用户确认，其地理位置包含的省份、直辖市、自治区信息（以下简称“地理位置信息”）为非个人隐私信息，用户成功预约“修好乐”手机维修服务视为确认授权“修好乐”提取、公开及使用用户的地理位置信息。用户地理位置信息将作为用户公开资料之一，由“修好乐”向其他用户公开。如用户需要终止向其他用户公开其地理位置信息，可随时向“修好乐”说明。<br>
+3.7 为了改善“修好乐”的服务，向用户提供更好的服务体验，“修好乐”或可会自行收集使用或向第三方提供用户的非个人隐私信息。<br>
+四、关于数据保护的权责<br>
+4.1 “修好乐”有着严格的流程监管制度，工程师不得以维修或回收以外的任何理由转移、查阅、调用客户设备里的任何数据，但“修好乐”不排除因不可控因素而造成检修设备数据泄露的任何可能。<br>
+4.2 请您务必于下单前备份并清除待检修设备的敏感数据。“修好乐”不会承担该设备于维修或回收过程中因数据丢失、泄露等因素而造成的任何损失及责任。<br>
+五、关于维修流程的权责<br>
+5.1 维修过程中，如因维修失误而造成的其他故障，“修好乐”承诺将免费修复，不额外收取费用；如设备完全损坏，“修好乐”将向您赔偿一部同等型号等价（不保证地区版本）的设备。<br>
+5.2 维修过程中，若由于个人原因，工程师和用户之间出现的任何纠纷问题，“修好乐”会积极主动为用户协商解决。<br>
+5.3 对于因跌落、磕碰、挤压或进液面积达10%以上而丧失部分或全部功能的设备，“修好乐”仅对您指定需修复的功能负维修责任。对于设备其他已知或未知的故障不承担任何责任。<br>
+5.4 请您务必于下单时认真填写待检修设备的相关信息。“修好乐”不会承担因您所提交信息的错误或缺漏而导致设备于维修过程中出现任何故障的责任。<br>
+5.5 如果检修设备于“修好乐”维修期间受损或丢失，“修好乐”会且仅会承担维修成本及与检修设备硬件相同型号（不保证地区版本）的赔偿责任，“修好乐”不会承担因此产生的任何其它后果及责任。<br>
+六、关于服务承诺的权责<br>
+6.1 硬件故障免费检测：<br>
+顾客在“修好乐”下单，寄修或工程师上门对顾客报修商品的硬件故障检测，不收取任何费用（包含上门费用）。<br>
+6.2 部件更换6个月免费维修：<br>
+在“修好乐”维修完成后，所更换的零配件均实施6个月免费保修，以下情况除外：<br>
+•维修完成后，所出现故障现象非“修好乐”更换的零配件造成的；<br>
+•维修完成后，人为损坏的；<br>
+6.3 不满意全额退款：<br>
+服务完成后7天内，如果不满意，客户可申请退款，我们有专业的仲裁部门会针对客户的投诉进行审核，本着公平公正的原则给出合理的解决办法，若属我司责任，将退还全额款项给客户。<br>
+七、关于维修费用<br>
+您支付的维修费用由两部分构成：零配件费用和维修服务费。<br>
+八、知识产权声明<br>
+8.1 “修好乐”在本服务中提供的内容（包括但不限于网页、文字、图片、音频、视频、图表等）的知识产权归“修好乐”所有。<br>
+8.2 除另有特别声明外，“修好乐”提供本服务时所依托软件的著作权、专利权及其他知识产权均归“修好乐”所有。<br>
+8.3 “修好乐”在本服务中所使用的“修好乐”等商业标识，其著作权或商标权归“修好乐”所有。<br>
+8.4 上述及其他任何本服务包含的内容的知识产权均受到法律保护，未经“修好乐”书面许可，任何人不得以任何形式进行使用或创造相关衍生作品。<br>
+九、法律责任<br>
+9.1 用户理解并同意，“修好乐”有权依合理判断对违反有关法律法规或本协议规定的行为进行处罚，对违法违规的任何用户采取适当的法律行动，并依据法律法规保存有关信息向有关部门报告等，用户应承担由此而产生的一切法律责任。<br>
+9.2 用户理解并同意，因用户违反本协议约定，导致或产生的任何第三方主张的任何索赔、要求或损失，包括合理的律师费，用户应当赔偿“修好乐”与合作维修工程师、关联单位，并使之免受损害。<br>
+十、不可抗力及其他负责事由<br>
+10.1 用户理解并确认，在使用本服务的过程中，可能会遇到不可抗力等风险因素，使本服务发生中断。不可抗力是指不能预见、不能克服并不能避免且对一方或双方造成重大影响的客观事件，包括但不限于自然灾害如洪水、地震、瘟疫流行和风暴等以及社会事件如战争、动乱、政府行为等。出现上述情况时，“修好乐”将努力在第一时间与相关单位配合，及时进行恢复，但是由此给用户造成的损失，“修好乐”及合作维修单位在法律允许的范围内免责。<br>
+10.2 本服务同大多数互联网服务一样，受包括但不限于用户原因、网络服务质量、社会环境等因素的差异影响，可能受到各种安全问题的侵扰，如他人利用用户的资料，造成现实生活中的骚扰；用户访问的其他网站中含有“特洛伊木马”等病毒，威胁到用户的计算机信息和数据的安全，继而影响本服务的正常使用等等。用户应加强信息安全及资料的保护意识，要注意加强密码保护，以免遭致损失和骚扰。<br>
+10.3 用户理解并确认，本服务存在因不可抗力、计算机病毒或黑客攻击、系统不稳定、用户所在位置、用户关机以及其他任何技术、互联网络、通信线路原因等造成的服务中断或不能满足用户要求的风险，因此导致的任何损失，“修好乐”不承担任何责任。<br>
+10.4 用户理解并确认，在使用本服务过程中存在来自任何他人的包括误导性的、欺骗性的、威胁性的、诽谤性的、令人反感的或非法的信息，或侵犯他人权利的匿名或冒名的信息，以及伴随该等信息的行为，因此导致的用户或第三方的任何损失，“修好乐”不承担任何责任。<br>
+10.5 用户理解并确认，“修好乐”需要定期或不定期地对“修好乐”平台或相关的设备进行检修或者维护，如因此类情况而造成服务在合理时间内的中断，“修好乐”无需为此承担任何责任，但“修好乐”应事先进行通告。<br>
+10.6 “修好乐”依据法律法规、本协议约定获得处理违法违规或违约内容的权利，该权利不构成“修好乐”的义务或承诺，“修好乐”不能保证及时发现违法违规或违约行为或进行相应处理。<br>
+10.7 用户理解并确认，对于“修好乐”向用户提供的下列产品或者服务的质量缺陷及其引发的任何损失，“修好乐”无需承担任何责任：<br>
+•“修好乐”向用户免费提供的服务；<br>
+•“修好乐”向用户赠送的任何产品或者服务。<br>
+十一、其他<br>
+11.1 协议的生效与变更<br>
+您使用本服务即视为您已阅读并同意受本协议的约束。“修好乐”有权在必要时修改本协议条款。您可以在相关页面中查阅最新的协议条款。本协议条款变更后，如果您继续使用本服务，即视为您已接受修改后的协议。如果您不接受修改后的协议，应当停止使用本服务。<br>
+11.2 单方解除权<br>
+若您违反本协议或有关法律法规，“修好乐”有权立刻解除本协议，您需承担由此产生的一切损失及责任。<br>
+11.3 协议签订地<br>
+本协议签订地为中华人民共和国广东省珠海市。<br>
+11.4 适用法律<br>
+本协议的成立、生效、履行、解释及纠纷解决，适用中华人民共和国大陆地区法律（不包括冲突法）。<br>
+11.5 争议解决<br>
+若您和“修好乐”之间发生任何纠纷或争议，首先应友好协商解决；协商不成的，您同意将纠纷或争议提交本协议签订地有管辖权的人民法院管辖。<br>
+11.6 条款标题<br>
+本协议所有条款的标题仅为阅读方便，本身并无实际涵义，不能作为本协议涵义解释的依据。<br>
+11.7 条款效力<br>
+本协议条款无论因何种原因部分无效或不可执行，其余条款仍有效，对双方具有约束力。<br>
+
+		        </p></section></article></div>
+		        <div class="weui_dialog_ft">
+		            <a href="javascript:;" class="weui_btn_dialog primary">确定</a>
+		        </div>
+		    </div>
+		</div>
+		<div style="height: 150px;">&nbsp;</div>
+		<div class="footer ser">
+			<a href="javascript:;" id="submit" onclick="submit();" class="weui_btn weui_btn_default weui_btn_disabled">确认支付</a>
+		</div>
+		<include file="Public/toast" />
+	</body>
+</html>

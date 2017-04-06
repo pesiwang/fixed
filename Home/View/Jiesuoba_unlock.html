@@ -1,0 +1,96 @@
+<!--解锁吧说明页面（关 于业务的说明）-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>IMEI服务</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <style>
+    	.smalla{
+    		font-size:medium;
+    	}
+    	
+    </style>
+    <body>
+<div class="page">
+    <div class="bd">
+        <div class="weui_cells_title"><span style="font-size: larger;color: #09BB07;">IMEI服务</span></div>
+        <div class="weui_cells">
+<form method="post" id="sure" action="{:U('Home/Jiesuoba/sureone')}">
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label"><small>IMEI</small></label></div>
+                <div class="weui_cell_bd weui_cell_primary smalla">
+                    <input class="weui_input" type="number" name="data[imei]" pattern="[0-9]*" placeholder="输入需要处理的手机IMEI"/ id="imei">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label"><small>手机号</small></label></div>
+                <div class="weui_cell_bd weui_cell_primary smalla">
+                    <input class="weui_input" type="number" name="data[phone]" pattern="[0-9]*" placeholder="确保手机号正确、通知和退款时需要！" id="phone"/>
+                </div>
+            </div>  
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label"><small>微信号</small></label></div>
+                <div class="weui_cell_bd weui_cell_primary smalla">
+                    <input class="weui_input" type="text" name="data[wechat]" placeholder="确保输入微信号正确、用于通知" id="wechat"/>
+                </div>
+            </div>   
+        
+	    <div class="weui_cells_title">套餐类型</div>	                  
+        <div class="weui_cells weui_cells_radio">
+        <volist name = "list" id="v">	
+            <label class="weui_cell weui_check_label" for="{$v.id}">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p><small>{$v.costname}</small><strong style="color: #ff4500;float: right;">￥<span>{$v.costprice}</span></strong></p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" class="weui_check" name="data[price]" id="{$v.id}" value="{$v.costprice},{$v.id},{$v.costname}">
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+ 			</volist>
+        </div>       
+        </div>
+       <div class="weui_cells_tips">请仔细确认imei、手机号、和套餐类型</div>
+        <div class="weui_btn_area">
+               <a class="weui_btn weui_btn_primary" onclick="checkempty()" href="javascript:void(0);">提交订单</a>
+        </div>
+
+</form>
+    </div>
+</div>
+</div>
+<script>
+$(function($){
+	$('input:radio:first').attr("checked","checked");
+//	document.getElementById('sure').submit();
+});
+	function checkempty(){
+		var p = /^1[3-8]\d{9}$/gi ;
+		var imei = $('#imei').val().trim();	
+		var phone = $('#phone').val().trim();
+		var wechat = $('#wechat').val().trim();		
+
+			if(imei.length != 15){
+				alert("IMEI是15位数字哦，请填写完整!");
+			}else if(!p.test(phone)){
+				alert("请输入正确的手机号!");
+			}else if(imei =="" || phone ==" " || wechat ==""){
+				alert("请检查imei、手机号、微信号是否输入!");
+			}else{
+				
+				$("#sure").submit();
+			}
+		
+	}
+	
+</script>
+
+
+  
+    </body>
+</html>

@@ -1,0 +1,160 @@
+<!--解锁吧说明页面（关 于业务的说明）-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>结算支付</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <style>
+    	#surepay{
+    		position: fixed;
+    		bottom: 0px;
+    		width: 100%;
+    	}
+    </style>
+    <body>
+<div class="page">
+    <div class="bd">
+	<div class="weui_cells_title">
+		<span style="font-size: larger;color: #09BB07;">请确认订单信息是否有误</span>
+	</div>
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>IMEI</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['imei']}</div>
+	    </div>
+	</div>
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>手机号:</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['phone']}</div>
+	    </div>
+	</div>	
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>微信号:</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['wechat']}</div>
+	    </div>
+	</div>       
+	<div class="weui_cells">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+	            <p>套餐类型:</p>
+	        </div>
+	        <div class="weui_cell_ft">{$data['costname']}</div>
+	    </div>
+	</div>
+        <div class="weui_panel">
+  			<div class="weui_panel_hd">总需要支付金额:<strong style="color: #ff4500;">￥{$data['price']}</strong></div>	
+            <div class="weui_panel_bd">
+                <div class="weui_media_box weui_media_small_appmsg">
+                    <div class="weui_cells weui_cells_access">
+                        <a class="weui_cell" href="javascript:;">
+                            <div class="weui_cell_bd weui_cell_primary">
+                                <p><small style="color: #A3A3A3;">支付方式:微信支付</small></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>	
+	<div class="weui_cells" id="surepay">
+	    <div class="weui_cell">
+	        <div class="weui_cell_bd weui_cell_primary">
+    			<a href="javascript:;" onclick="callpay()" class="weui_btn weui_btn_primary">确认支付</a>	
+	        </div>
+	    </div>
+	</div>
+	
+	
+	</div>
+</div>
+
+
+    </body>
+     <script type="text/javascript">
+        //调用微信JS api 支付
+        function jsApiCall()
+        {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                {$payjs},
+                function(res){
+                    if(res.err_msg == "get_brand_wcpay_request:ok"){
+                    	//支付成功
+                    	var url = "{:U('Home/Jiesuoba/successres')}";
+                    	$.ajax({
+                    		type:"get",
+                    		url:url,
+                    		dataType:'json',
+     						data:'order={$ordernumber}&openid={$openid}&imei={$data["imei"]}&phone={$data["phone"]}&wechat={$data["wechat"]}&realpay={$data["price"]}&costtype={$data["typeid"]}',	             
+                    		success:function(data){
+                    			if(data){
+		                            window.location.href="http://jiesuoba.com/index.php/Home/Jiesuoba/successurl";
+                    			}
+                    		},
+                    		error:function(e){
+                    			
+                    			
+                    		}
+                    		
+                    	});
+                    	
+                        }else{
+                        	//支付失败
+                        	
+                             window.location.href="http://jiesuoba.com/index.php/Home/Checkfixed/payerror";                       	
+                        }
+                }
+            );
+        }
+		function callpay(){
+		//验证该商户号是否支付成功		
+        	var url = "{:U('Home/Jiesuoba/checknumber')}";
+        	$.ajax({
+        		type:"get",
+        		url:url,
+        		dataType:'json',
+				data:'order={$ordernumber}',	             
+        		success:function(data){
+        			if(data){
+                         window.location.href="http://jiesuoba.com/index.php/Home/Checkfixed/payerror";                       		
+        			}else{
+        				surecallpay();
+        			}
+        		},
+        		error:function(e){
+        			
+        			
+        		}
+        		
+        	});			
+			
+		}
+		
+		
+        function surecallpay()
+        {
+        	
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+                }
+            }else{
+                jsApiCall();
+            }
+        }
+    </script>   
+</html>

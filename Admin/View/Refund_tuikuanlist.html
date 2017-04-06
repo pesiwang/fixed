@@ -1,0 +1,128 @@
+<!--订单页面-->
+ <include file="Public/head" />
+ 
+ 
+ <!--订单列表-->
+	<div class="row">
+		<div class="col-xs-11" style="margin-left: 3%;margin-bottom: 50px;">
+			<h3 class="header smaller lighter blue">订单列表</h3>
+			<div class="table-header">
+				订单详细列表
+			</div>
+			<div class="col-xs-12" style="padding-top: 10px;padding-bottom: 15px;">
+				<form class="col-md-5" method="post" id="search" action="{:U('Admin/Order/detail',array('type'=>'search'))}">
+					<span class="input-icon">
+						<input type="text" name="condition" class="form-control" placeholder="IMEI/手机号 " aria-describedby="basic-addon1" size="30">
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+					<a class="btn btn-primary btn-sm" href="javascript:void(0);" onclick="document.getElementById('search').submit();">搜索订单</a>
+				</form>
+			</div>
+			<div class="col-xs-12" style="padding-left: 0px; margin-left: 0px; padding-bottom: 25px;">
+				<a href="{:U('Admin/Order/detail')}">
+					<span class="label label-xlg label-primary arrowed arrowed-right">全部订单</span>
+				</a>
+				<a href='{:U("Admin/Order/detail",array("type" => "nfahuo"))}'>
+					<span class="label label-xlg label-primary arrowed arrowed-right">未发货</span>
+				</a>
+				<a href='{:U("Admin/Order/detail",array("type" => "yfahuo"))}'>
+					<span class="label label-xlg label-primary arrowed arrowed-right">已发货</span>
+				</a>
+				<a href='{:U("Admin/Order/detail",array("type" => "tksq"))}'>
+					<span class="label label-xlg label-primary arrowed arrowed-right">申请退款</span>
+				</a>
+				<a href='{:U("Admin/Order/detail",array("type" => "tkcg"))}'>
+					<span class="label label-xlg label-primary arrowed arrowed-right">退款成功</span>
+				</a>
+				<a href='{:U("Admin/Order/detail",array("type" => "jjtk"))}'>
+					<span class="label label-xlg label-primary arrowed arrowed-right">拒绝退款</span>
+				</a>
+				<hr>
+			</div>	
+			<div class="col-xs-8 col-lg-offset-2" style="padding-top: 10px; border: 1px solid #999; border-radius: 20px;">
+				<a href="{:U('Admin/Order/detail')}" style="float: right;"><small style="color: #A3A3A3;">关闭</small></a>
+				<if condition = "$data[0]['state'] eq 1" >
+					<h2 class="text-center"><span class="red">提示：</span><small class="red">你已经点过发货，检查是否帮助完成订单再确定是否给于退款处理</small></h2>
+				</if>
+				<h1 class="text-center">退款订单详细信息</h1>	
+				<h2 class="text-center"> 
+					<small>
+					该订单处理结果：
+					<if condition="$data[0]['isrefund'] eq 1">
+					未处理（申请退款）
+					</if>
+					<if condition="$data[0]['isrefund'] eq 3">
+					处理成功（退款成功）
+					<if>
+					</if>
+					<if condition="$data[0]['isrefund'] eq 2">
+					拒绝处理（拒绝退款）
+					</if>
+					</small>
+				</h2>
+				<hr />
+				<div class="col-xs-8 col-lg-offset-3">
+					<h2>订单IMEI：{$data[0]['imei']}</h2>
+					<h2>退款时间：{$data[0]['tksq_time']}</h2>
+					<h2>用户手机号：{$data[0]['phone']}</h2>				
+					<h2>用户微信号：{$data[0]['wechat']}</h2>
+					<h2><span class="red">订单实付金额：</span>￥{$data[0]['realpay']}</h2>
+					<h2><span class="red">支付宝姓名：</span>{$data[0]['tkname']}</h2>
+					<h2><span class="red">支付宝账号：</span>{$data[0]['zhifubao']}</h2>		
+				</div>
+			<if condition ="$data[0]['isrefund'] neq 3">	
+				<a class="btn btn-primary" onclick="dealtk({$data[0]['id']},3)">同意并已退款</a>
+			</if>
+			
+			<if condition ="$data[0]['isrefund'] eq 1">
+				<a class="btn btn-primary" style="float: right;" onclick="dealtk({$data[0]['id']},2)">拒绝退款</a>
+			</if>
+			
+			<div  class="col-xs-12">
+			<hr />
+				<h2><span class="red">说明：</span><small>如果确认没有帮助完成解锁,已将款项用过支付宝转账用户成功，可以单击已退款按钮！     如果已帮用户成功解锁，但用户提交了退款申请，你想拒绝退还款项，可以单击拒绝退款按钮！</small></h2>			
+			</div>			
+			</div>
+			
+
+</div>
+ <!--订单列表-->
+<script>
+ //删除
+  	function dealtk(id,status){
+ 		var id = id;
+ 		var status = status;
+ 		var url = "{:U('Admin/Refund/dealtk','','')}";
+ 		if(window.confirm('请确认是否进行此操作？')){
+          $.ajax({
+          	type:"get",
+          	url:url,
+          	dataType:'json',
+          	data:'id='+id+'&status='+status,
+          	success:function(data){
+          		if(data){
+          			alert("处理成功!微信消息通知推送成功!");
+      			 	window.location.reload();
+          		}
+          		
+          	},
+          	error:function(e){
+          		
+          	}
+          });      
+               
+                
+      	}else{
+      		
+      		
+      		
+    	}
+ 		
+ 	}	
+	
+</script>
+ 
+ 
+ 
+ 
+ <include file="Public/foot" />

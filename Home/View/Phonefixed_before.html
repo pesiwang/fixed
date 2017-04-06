@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	    <title>修好乐手机维修</title>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/weui.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/example.css"/>
+	    <link rel="stylesheet" href="__PUBLICHOME__/css/style.css" />
+	     <script src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+	    <script src="__PUBLICHOME__/js/phonefiexd_before.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<a href="javascript:history.go(-1)">
+				<img src="__PUBLICHOME__/img/left.png" style="">
+			</a>
+			<span>故障维修方案</span>
+		</div>
+		<div class="detail">
+			<p id="model" >机型：ipone6S (灰(黑色屏幕))</p>
+		</div>
+		<div class="container" id="container">
+			<div id="list">
+				<div class="weui_cells_con">
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">故障：</span>
+						<span class="weui_cells_reason" >内屏碎(图像不正常)</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">方案：</span>
+						<span class="weui_cells_reason" >内屏碎(图像不正常)</span>
+					</p>
+					<p class="weui_cells_total">
+						<span class="weui_cells_title">费用：</span>
+						<span class="weui_cells_reason" >内屏碎(图像不正常)</span>
+					</p>
+				</div>	
+			</div>	
+			<div style="background-color: #FBF9FE;">&nbsp;</div>
+			<div class="weui_cells weui_cells_form" style="padding: 5px 0;">
+	    		<div class="weui_cell">
+		            <div class="weui_cell_bd weui_cell_primary">
+			             <form  action="{:U('after')} "  method="post">
+						        <input type="text" style="display:none" name="model_color" />
+						        <input type="text" style="display:none" name="prbm_list" />
+				                <textarea name="comments" class="weui_textarea textarea_demand" placeholder="对你的问题进行详细的描述..." rows="3"></textarea>
+		                 </form>
+		            </div>
+		        </div>
+		        <div class="weui_pay">
+		        	<p><span class="weui_M">合计：<strong id="total">1150</strong></span><br/><span class="weui_cells_title">请尽快完成支付</span></p>
+		            <a href="javascript:;"  onclick="$('form').submit();" class="weui_btn weui_btn_primary weui_btn_sus">确认，下一步</a>
+	            </div>
+	    	</div>
+		</div>  
+		<div style="height:50px;width:100%"></div>
+		<div class="footer ser">
+			<a href="tel:0756-8992369" style="color: #F39800;">客服电话：0756-8992369</a>
+		</div>
+		  <include file="Public/toast" />
+	</body>
+</html>

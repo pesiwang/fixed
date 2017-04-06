@@ -1,0 +1,178 @@
+<!--//退款申请验证手机号-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>验证手机</title>
+        <link rel="stylesheet" href="__PUBLICHOME__/weui.min.css"/>
+        <script type="text/javascript" src="__PUBLICHOME__/jquery-2.1.4.min.js"></script>
+    </head>
+    <style>
+    	.zicolor{
+    		color: #a3a3a3;
+    		font-size: 0.8em;
+    	}
+    	#sendcode{
+    		background-color: ;
+    	}
+    </style>
+  <body>
+
+        
+	         <div class="weui_panel">
+	            <div class="weui_panel_hd"><span style="font-size: larger;color: #09BB07;">手机验证</span></div>
+		        <div class="weui_cells weui_cells_form">
+		            <div class="weui_cell">
+		                <div class="weui_cell_hd"><label class="weui_label">手机号</label></div>
+		                <div class="weui_cell_bd weui_cell_primary">
+		                    <input class="weui_input" type="number" pattern="[0-9]*" value="{$data['phone']}" disabled="disabled"/>
+		                </div>
+		            </div>
+		            <div class="weui_cell">
+		                <div class="weui_cell_hd"><label class="weui_label">验证码</label></div>
+		                <div class="weui_cell_bd weui_cell_primary">
+		                    <input class="weui_input" type="number" pattern="[0-9]*" placeholder="请输入验证码" id="code"/>
+		                </div>
+		                <div class="weui_cell_ft" >
+							<button href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" id="sendcode" onclick="sendMessage()">发送验证码</button>		                	
+		                </div>
+		            </div>
+		        </div>
+		        <div class="weui_cells_tips">手机号验证成功才可进行退款操作</div>
+		        <div class="weui_btn_area">
+		            <a class="weui_btn weui_btn_primary" href="javascript:" id="showTooltips" onclick="sure()">确定</a>
+		        </div>				
+
+
+	        </div> 	
+
+  
+
+  </body> 
+  <!--<script>
+  	  $(function($){
+  	$("#sendcode").on('click',function(){
+		alert(1);
+  		
+  	});
+  });
+  </script>-->
+  
+  <!--<script>
+  $(function($){
+  	var count = 60;
+  	var interval;
+  	$("#sendcode").on('click',function(){
+		 //生成验证码
+		     for (var i = 0; i < 6; i++) {  
+		            code += parseInt(Math.random() * 9).toString();  
+		            alert(code);
+		        } 
+		 	
+		 	
+		 	
+  		
+        //设置button效果，开始计时  
+        $("#sendcode").attr("disabled", "true");  
+        $("#sendcode").val(" 发送验证码(60)");  
+//		interval = setInterval(reducetime,1000);
+		alert(1);
+  		
+  	});
+  });
+  
+  function reducetime(){
+  			if(count == 0){
+				clearInterval(interval);//停止计时器  
+  				$("#sendcode").remove("disabled");
+        		$("#sendcode").val(" 发送验证码");
+        		code = "";
+  			}else if(count > 0){
+		        count--;  
+  				
+		        $("#sendcode").val("再次验证码(" + count + ")"); 	
+  				
+  			}
+  	
+  	
+  }
+  </script>-->
+  
+  
+  
+<script type="text/javascript">
+    var InterValObj; //timer变量，控制时间
+	var count = 60; //间隔函数，1秒执行
+	var curCount;//当前剩余秒数
+	var code = ""; //验证码
+	var codeLength = 6;//验证码长度
+	function sendMessage() {
+        curCount = count;
+            //产生验证码
+		for (var i = 0; i < codeLength; i++) {
+                code += parseInt(Math.random() * 9).toString();
+            }
+//		alert(code);
+            //设置button效果，开始计时
+                $("#sendcode").attr("disabled", "disabled");
+                $("#sendcode").text("重新发送("+curCount+")");
+                InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+				var url = '{:U("Home/Jiesuoba/sendcode")}';
+				$.ajax({
+					type:"get",
+					url:url,
+					dataType:'json',
+					data:'phone={$data["phone"]}&code='+code,
+					success:function(data){
+						if(data){
+							alert("该验证码10分钟有效，请于10分钟内填写!");
+						}else{
+							alert("发送失败");
+						}
+					},
+					error:function(e){
+						
+					}
+				});
+            }
+        //timer处理函数
+function SetRemainTime() {
+            if (curCount == 0) {                
+                window.clearInterval(InterValObj);//停止计时器
+                $("#sendcode").removeAttr("disabled");//启用按钮
+                $("#sendcode").addClass("")
+                $("#sendcode").text("重新发送验证码");
+                code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效    
+            }
+            else {
+                curCount--;
+                $("#sendcode").text("重新发送("+curCount+")");
+            }
+        }
+
+
+//单击确定
+	function sure(){
+		var codes = $("#code").val().trim();
+		var url = '{:U("Home/Jiesuoba/checkcode")}';
+		$.ajax({
+			type:"get",
+			url:url,
+			dataType:'json',
+			data:'codes='+codes,
+			success:function(data){
+				if(data){
+                    window.location.href="http://jiesuoba.com/index.php/Home/Jiesuoba/yestk/id/{$data['id']}";
+				}else{
+					alert("您输入的验证码有误");
+				}
+			},
+			error:function(e){
+				
+			}
+		});		
+		
+	}
+    </script>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title><?php echo($error); ?></title>
+		<meta name="keywords" content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文" />
+		<meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="__PUBLIC__/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="__PUBLIC__/assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="__PUBLIC__/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="__PUBLIC__/assets/css/ace-rtl.min.css" />
+				<style type="text/css">
+			body{
+				overflow-y:hidden;/* 禁用 滚动条*/
+			}
+		</style>
+	</head>
+	<body class="login-layout" style="background-color:#078fc9;">
+		<div class="main-container">
+			<div class="main-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="top" style="margin-top:240px;"></div>
+							<div class="space-6"></div>
+							<div class="position-relative">
+								<div id="login-box" class="login-box visible">
+									<div class="widget-body">
+										<div class="widget-main text-center" style="padding:30px;">
+											<div class="widget-img">
+												<img src="__PUBLIC__/assets/avatars/success.gif">
+											</div>
+											<h1><?php if(isset($error)) {echo($error);}else{echo($message);} ?>
+											</h1>页面自动跳转 等待时间：
+											<h1 id="wait">
+											<?php echo($waitSecond); ?>
+											</h1>
+											<a id="href" href="<?php echo($jumpUrl); ?>" class="btn btn-green">
+													跳转
+        	                      			 <i class="icon-arrow-right"></i>
+											</a>
+											<div class="space-6" style="padding:5px;"></div>
+										</div>
+										<!-- /widget-main -->
+									</div>
+									<!-- /widget-body -->
+								</div>
+								<!-- /forgot-box -->
+							</div>
+							<!-- /position-relative -->
+						</div>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+		</div>
+       <script type="text/javascript">
+        (function(){
+        var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+        	var time = --wait.innerHTML;
+        	if(time <= 0) {
+        		location.href = href;
+        		clearInterval(interval);
+        	};
+        }, 1000);
+        })();
+        </script>
+	</body>
+
+</html>
