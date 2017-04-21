@@ -20,7 +20,7 @@ class BaseController extends Controller
  // 站点URL
     public $appid = 'wxc555f6097f8be8d6';
 
-    public $appSecret = '5aa0f01b2c2421e5bdb94578b035d3bf';
+    public $appSecret = '203a327b3f9a5df322896c42bdccf096';
 
     public function __construct()
     {
@@ -29,10 +29,12 @@ class BaseController extends Controller
         $baseToken = M('token');
         $where = "id=1";
         $usingToken = $baseToken->where($where)->find();
+		\Think\Log::write(json_encode($usingToken), 'ERR');
         $this->thisSiteUrl = 'http://' . $_SERVER['HTTP_HOST'];
         if ($usingToken['lasttime'] < (time() - 6500)) {
             // 如果不是最新的token,就更新数据库的token
             $newToken = $this->curl->rapid("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->appid}&secret={$this->appSecret}");
+			\Think\Log::write('toke return-------------------' . $newToken, 'ERR');
             $newToken = json_decode($newToken, true);
             $newToken = $newToken['access_token'];
             $baseToken->lasttime = time();

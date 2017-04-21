@@ -36,6 +36,7 @@ class PhonefixedController extends BaseController
     public function index()
     {
        // $this->wx_init();
+		\Think\Log::write('test-------------------', 'ERR');
         $this->display();
     }
 

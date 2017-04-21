@@ -12,9 +12,9 @@ class MenuController extends BaseController {
                 'name'=>'我要维修',
                 'sub_button'=>array(
                     array(
+                        'name'=>'预约上门',
                         'type'=>'view',
-                        'name'=>'上门维修',
-                        'url'=>'http://www.xiuhl.com/Home/Phonefixed/index'
+                        'url'=>'http://www.xiuhl.com/Home/Menu/tel'
                     ),
                     array(
                         'type'=>'view',
@@ -80,6 +80,13 @@ class MenuController extends BaseController {
        echo '创建结果'.$result;
     }
     
+	public function get() {
+        $curl=new Curl();
+		echo $this->token;
+		$get = $curl->rapid("https://api.weixin.qq.com/cgi-bin/menu/get?access_token={$this->token}");
+		echo $get;
+	}
+
     public function tel()
     {
         $this->display();
