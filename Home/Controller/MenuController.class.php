@@ -56,7 +56,7 @@ class MenuController extends BaseController {
                     ),
                     array(
                         'type'=>'view',
-                        'name'=>'关于我们',
+                        'name'=>'联系我们',
                         'url'=>'http://www.xiuhl.com/Home/Phonefixed/about'
                     ),
                     array(
