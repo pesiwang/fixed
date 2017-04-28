@@ -51,6 +51,11 @@ class MenuController extends BaseController {
                 'sub_button'=>array(
                     array(
                         'type'=>'view',
+                        'name'=>'公司简介',
+                        'url'=>'https://mp.weixin.qq.com/s/yYZeSxK7E1XWWBR0SYbqkw'
+                    ),
+                    array(
+                        'type'=>'view',
                         'name'=>'关于我们',
                         'url'=>'http://www.xiuhl.com/Home/Phonefixed/about'
                     ),
@@ -73,6 +78,7 @@ class MenuController extends BaseController {
             ),
          ));
         $data=json_encode($data,JSON_UNESCAPED_UNICODE);
+		var_dump($this->token);
         echo $data;
         $del=$curl->rapid("https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={$this->token}");
        echo '删除结果：'.$del;

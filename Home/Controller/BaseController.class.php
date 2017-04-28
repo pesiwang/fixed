@@ -31,16 +31,19 @@ class BaseController extends Controller
         $usingToken = $baseToken->where($where)->find();
 		\Think\Log::write(json_encode($usingToken), 'ERR');
         $this->thisSiteUrl = 'http://' . $_SERVER['HTTP_HOST'];
-        if ($usingToken['lasttime'] < (time() - 6500)) {
+        if ($usingToken['lasttime'] < (time() - 6500) || !isset($usingToken['token'])) {
             // 如果不是最新的token,就更新数据库的token
-            $newToken = $this->curl->rapid("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->appid}&secret={$this->appSecret}");
-			\Think\Log::write('toke return-------------------' . $newToken, 'ERR');
-            $newToken = json_decode($newToken, true);
-            $newToken = $newToken['access_token'];
-            $baseToken->lasttime = time();
-            $baseToken->token = $newToken;
-            $baseToken->where($where)->save();
-            $this->token = $newToken;
+            $response = $this->curl->rapid("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->appid}&secret={$this->appSecret}");
+            $tokenInfo = json_decode($response, true);
+			if (isset($tokenInfo['access_token'])) {
+            	$newToken = $tokenInfo['access_token'];
+           		$baseToken->lasttime = time();
+            	$baseToken->token = $newToken;
+            	$baseToken->where($where)->save();
+            	$this->token = $newToken;
+			} else {
+				\Think\Log::write('get toke response error, response=' . $response, 'ERR');
+			}
         } else {
             $this->token = $usingToken['token'];
         }
